@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nearby Shop Network | Smart Local Shopping & Discovery</title>
+  <meta name="description" content="Discover nearby local shops, check live product availability, contact shopkeepers before visiting, and order home delivery. Presented by Utkrisht Chaudhary.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Leaflet CSS for Interactive Map -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- Ambient Cursor Glow Spotlight -->
+  <div class="cursor-glow" id="cursorGlow"></div>
+
+  <!-- Announcement / Location Top Bar -->
+  <div class="top-banner">
+    <div class="container banner-inner">
+      <div class="banner-left">
+        <span class="live-dot"></span>
+        <span class="banner-text"><strong>Live Local Network Active:</strong> Connecting customers to 40+ verified neighborhood stores</span>
+      </div>
+      <div class="banner-right">
+        <span class="location-chip" id="userLocationBadge">
+          <i class="fa-solid fa-location-dot"></i> <span id="currentLocationText">Civil Lines, Sector 4 (Auto-detected)</span>
+        </span>
+        <button class="banner-link-btn" onclick="openPresentationModal()">
+          <i class="fa-solid fa-graduation-cap"></i> Project Presentation
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Navigation Bar -->
+  <header class="navbar" id="navbar">
+    <div class="container nav-container">
+      <a href="#" class="logo-group" onclick="switchTab('explore')">
+        <div class="logo-icon-wrap">
+          <i class="fa-solid fa-shop"></i>
+          <span class="logo-ping"></span>
+        </div>
+        <div class="logo-meta">
+          <span class="logo-title">NearbyShop<span class="logo-highlight">Net</span></span>
+          <span class="logo-sub">Smart Local Discovery</span>
+        </div>
+      </a>
+
+      <!-- Navigation Tabs -->
+      <nav class="nav-links">
+        <button class="nav-item active" data-tab="explore" onclick="switchTab('explore')">
+          <i class="fa-solid fa-compass"></i> Discover Shops
+        </button>
+        <button class="nav-item" data-tab="map" onclick="switchTab('map')">
+          <i class="fa-solid fa-map-location-dot"></i> Live Map
+        </button>
+        <button class="nav-item" data-tab="products" onclick="switchTab('products')">
+          <i class="fa-solid fa-boxes-stacked"></i> Live Availability
+        </button>
+        <button class="nav-item" data-tab="merchant" onclick="switchTab('merchant')">
+          <i class="fa-solid fa-store"></i> Shopkeeper Portal
+        </button>
+        <button class="nav-item" data-tab="presentation" onclick="switchTab('presentation')">
+          <i class="fa-solid fa-chart-pie"></i> Vision & Pitch Deck
+        </button>
+      </nav>
+
+      <!-- Nav Actions (Cart & Auth) -->
+      <div class="nav-actions">
+        <!-- Cart Drawer Toggle -->
+        <button class="action-btn cart-btn" id="cartBtn" onclick="toggleCartDrawer()" title="View Order Basket">
+          <i class="fa-solid fa-bag-shopping"></i>
+          <span class="badge" id="cartCountBadge">0</span>
+        </button>
+
+        <!-- Auth Status Button -->
+        <div class="user-auth-wrap" id="userAuthWrap">
+          <button class="btn btn-outline" id="loginBtn" onclick="openAuthModal('login')">
+            <i class="fa-regular fa-user"></i> <span>Sign In</span>
+          </button>
+        </div>
+
+        <!-- Mobile Menu Toggle -->
+        <button class="mobile-menu-btn" id="mobileMenuBtn" onclick="toggleMobileNav()">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Navigation -->
+  <div class="mobile-nav-drawer" id="mobileNavDrawer">
+    <button class="close-mobile-nav" onclick="toggleMobileNav()"><i class="fa-solid fa-xmark"></i></button>
+    <div class="mobile-links">
+      <button class="mobile-nav-item" onclick="switchTab('explore'); toggleMobileNav()">
+        <i class="fa-solid fa-compass"></i> Discover Shops
+      </button>
+      <button class="mobile-nav-item" onclick="switchTab('map'); toggleMobileNav()">
+        <i class="fa-solid fa-map-location-dot"></i> Live Shop Map
+      </button>
+      <button class="mobile-nav-item" onclick="switchTab('products'); toggleMobileNav()">
+        <i class="fa-solid fa-boxes-stacked"></i> Live Availability
+      </button>
+      <button class="mobile-nav-item" onclick="switchTab('merchant'); toggleMobileNav()">
+        <i class="fa-solid fa-store"></i> Shopkeeper Portal
+      </button>
+      <button class="mobile-nav-item" onclick="switchTab('presentation'); toggleMobileNav()">
+        <i class="fa-solid fa-chart-pie"></i> Vision & Pitch Deck
+      </button>
+      <button class="mobile-nav-item" onclick="openAuthModal('login'); toggleMobileNav()">
+        <i class="fa-regular fa-user"></i> Account Login
+      </button>
+    </div>
+  </div>
+
+  <!-- MAIN APPLICATION VIEWS -->
+  <main class="main-content">
+
+    <!-- VIEW 1: EXPLORE & DISCOVER SHOPS (DEFAULT VIEW) -->
+    <section class="tab-view active" id="view-explore">
+      
+      <!-- Interactive Hero Section with Glowing Spotlight -->
+      <div class="hero-section">
+        <div class="hero-bg-glow"></div>
+        <div class="container hero-container">
+          <div class="hero-badge-pill tilt-target">
+            <i class="fa-solid fa-bolt text-primary"></i>
+            <span>Save time before you travel • Find • Check • Contact • Order</span>
+          </div>
+          
+          <h1 class="hero-title">
+            Find What You Need In <br>
+            <span class="gradient-text">Your Neighborhood Right Now</span>
+          </h1>
+          
+          <p class="hero-subtitle">
+            Don't travel blindly. Instantly check if your local shop is open, verify product stock, chat directly with the shopkeeper, or request home delivery in minutes.
+          </p>
+
+          <!-- Interactive Search & Discovery Command Center -->
+          <div class="search-command-card spotlight-card">
+            <div class="search-inputs-grid">
+              <!-- Keyword Search -->
+              <div class="search-col main-search-col">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <input type="text" id="mainSearchInput" placeholder="Search shop name, product (e.g. Paracetamol, Milk, Bread, Drill)..." autocomplete="off">
+                <button class="clear-search-btn" id="clearSearchBtn" onclick="clearSearch()" style="display:none;">
+                  <i class="fa-solid fa-xmark"></i>
+                </button>
+              </div>
+
+              <!-- Category Dropdown -->
+              <div class="search-col">
+                <i class="fa-solid fa-layer-group search-icon"></i>
+                <select id="categorySelect" onchange="applyFilters()">
+                  <option value="all">All Shop Categories</option>
+                  <option value="grocery">Groceries & Supermart</option>
+                  <option value="pharmacy">Pharmacy & Healthcare</option>
+                  <option value="electronics">Electronics & Tech</option>
+                  <option value="bakery">Bakery & Sweets</option>
+                  <option value="hardware">Hardware & Tools</option>
+                  <option value="stationery">Books & Stationery</option>
+                </select>
+              </div>
+
+              <!-- Radius Selector -->
+              <div class="search-col radius-col">
+                <div class="radius-header">
+                  <span><i class="fa-solid fa-bullseye"></i> Within: <strong id="radiusValueLabel">5 km</strong></span>
+                </div>
+                <input type="range" id="radiusRange" min="1" max="15" value="5" step="1" oninput="updateRadius(this.value)">
+              </div>
+
+              <!-- Submit Filter -->
+              <div class="search-col submit-col">
+                <button class="btn btn-primary btn-glow full-width" onclick="applyFilters()">
+                  <span>Find Shops</span> <i class="fa-solid fa-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Quick Filter Tags -->
+            <div class="quick-filter-bar">
+              <span class="filter-label">Quick Filters:</span>
+              <button class="chip-filter active" data-filter="all" onclick="setQuickFilter('all', this)">All</button>
+              <button class="chip-filter" data-filter="open" onclick="setQuickFilter('open', this)"><span class="dot-green"></span> Open Now</button>
+              <button class="chip-filter" data-filter="delivery" onclick="setQuickFilter('delivery', this)"><i class="fa-solid fa-truck"></i> Home Delivery</button>
+              <button class="chip-filter" data-filter="verified" onclick="setQuickFilter('verified', this)"><i class="fa-solid fa-circle-check"></i> Verified Merchant</button>
+              <button class="chip-filter" data-filter="top" onclick="setQuickFilter('top', this)"><i class="fa-solid fa-star"></i> Top Rated (4.5+)</button>
+            </div>
+          </div>
+
+          <!-- Quick Stats Counter Strip -->
+          <div class="stats-strip">
+            <div class="stat-item spotlight-card">
+              <div class="stat-number" id="statsActiveShops">48</div>
+              <div class="stat-label">Verified Local Shops</div>
+            </div>
+            <div class="stat-item spotlight-card">
+              <div class="stat-number">1,240+</div>
+              <div class="stat-label">Products In Stock</div>
+            </div>
+            <div class="stat-item spotlight-card">
+              <div class="stat-number">< 15 min</div>
+              <div class="stat-label">Avg. Local Response</div>
+            </div>
+            <div class="stat-item spotlight-card">
+              <div class="stat-number">100%</div>
+              <div class="stat-label">Time Saved Wasted Trips</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Marketplace Listing Section -->
+      <div class="container section-container">
+        <div class="section-header-flex">
+          <div>
+            <h2 class="section-title">Nearby Registered Shops</h2>
+            <p class="section-subtitle">Real-time status, live distance, and verified contact directly with merchants</p>
+          </div>
+          <div class="view-and-sort-controls">
+            <!-- View Mode Switcher -->
+            <div class="view-toggle-group">
+              <button class="view-toggle-btn active" id="viewModeGrid" onclick="setMarketplaceViewMode('grid')" title="Cards Grid View">
+                <i class="fa-solid fa-grip"></i> <span>Cards</span>
+              </button>
+              <button class="view-toggle-btn" id="viewModeSplit" onclick="setMarketplaceViewMode('split')" title="Split View (Map + Cards)">
+                <i class="fa-solid fa-table-columns"></i> <span>Split</span>
+              </button>
+              <button class="view-toggle-btn" id="viewModeMap" onclick="setMarketplaceViewMode('map')" title="Interactive Map View">
+                <i class="fa-solid fa-map-location-dot"></i> <span>Map</span>
+              </button>
+            </div>
+
+            <div class="sort-controls">
+              <label for="sortSelect">Sort by:</label>
+              <select id="sortSelect" onchange="applyFilters()">
+                <option value="distance">Nearest Distance</option>
+                <option value="rating">Highest Rated</option>
+                <option value="name">Shop Name (A-Z)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interactive Live Map Container -->
+        <div class="marketplace-map-card spotlight-card" id="marketplaceMapCard" style="display: none;">
+          <div class="map-card-header">
+            <div class="map-header-left">
+              <div class="map-badge-live">
+                <span class="live-dot"></span> LIVE GPS RADAR
+              </div>
+              <h3 class="map-heading">Interactive Neighborhood Store Map</h3>
+              <span class="map-count-pill" id="mapShopCountBadge">6 Shops in Area</span>
+            </div>
+            <div class="map-header-actions">
+              <button class="btn btn-sm btn-outline map-action-btn" onclick="locateUserPosition()" title="Center on My Location">
+                <i class="fa-solid fa-crosshairs"></i> Locate Me
+              </button>
+              <button class="btn btn-sm btn-outline map-action-btn" onclick="toggleMapTileStyle()" id="mapTileToggleBtn" title="Switch Map Theme">
+                <i class="fa-solid fa-layer-group"></i> <span id="mapTileStyleLabel">Street View</span>
+              </button>
+              <button class="btn btn-sm btn-outline map-action-btn" onclick="fitAllShopsOnMap()" title="Show All Stores">
+                <i class="fa-solid fa-expand"></i> Fit All
+              </button>
+            </div>
+          </div>
+
+          <!-- The Leaflet Map Element -->
+          <div id="mainShopsMap" class="leaflet-map-view"></div>
+
+          <!-- Map Info / Quick Legend Bar -->
+          <div class="map-legend-bar">
+            <div class="legend-item"><span class="legend-dot open"></span> Store Open Now</div>
+            <div class="legend-item"><span class="legend-dot closed"></span> Store Closed</div>
+            <div class="legend-item"><span class="legend-dot new"></span> Newly Registered</div>
+            <div class="legend-item"><span class="legend-dot user"></span> User Location</div>
+            <div class="legend-tip"><i class="fa-solid fa-info-circle"></i> Click any pin to view live catalog & contact merchant</div>
+          </div>
+        </div>
+
+        <!-- Dynamic Shops Grid -->
+        <div class="shops-grid" id="shopsGrid">
+          <!-- Rendered dynamically by app.js -->
+        </div>
+
+        <!-- Empty State (hidden by default) -->
+        <div class="empty-state" id="emptyState" style="display:none;">
+          <div class="empty-icon"><i class="fa-solid fa-shop-slash"></i></div>
+          <h3>No matching shops found</h3>
+          <p>Try widening your distance radius slider or clearing search terms.</p>
+          <button class="btn btn-outline" onclick="resetFilters()">Reset All Filters</button>
+        </div>
+      </div>
+
+      <!-- Live Feature Showcase Banner -->
+      <section class="container showcase-banner-wrap">
+        <div class="showcase-banner spotlight-card">
+          <div class="showcase-content">
+            <span class="badge-accent">Smart Problem-Solution Architecture</span>
+            <h2>Why Travelers and Neighbors Love NearbyShopNet</h2>
+            <div class="perks-grid">
+              <div class="perk-box">
+                <div class="perk-icon"><i class="fa-regular fa-clock"></i></div>
+                <h4>Know Before You Go</h4>
+                <p>Never show up to a shuttered shop again. Real-time store schedules updated directly by local shopkeepers.</p>
+              </div>
+              <div class="perk-box">
+                <div class="perk-icon"><i class="fa-solid fa-boxes-packing"></i></div>
+                <h4>Stock Availability Check</h4>
+                <p>Confirm the exact medicine, item, or grocery brand is in stock before spending fuel or time walking.</p>
+              </div>
+              <div class="perk-box">
+                <div class="perk-icon"><i class="fa-brands fa-whatsapp"></i></div>
+                <h4>Direct WhatsApp / Call</h4>
+                <p>No middlemen taking cuts. Chat directly with the merchant to hold an item or ask questions.</p>
+              </div>
+              <div class="perk-box">
+                <div class="perk-icon"><i class="fa-solid fa-house-chimney"></i></div>
+                <h4>Neighborhood Delivery</h4>
+                <p>Support your hyper-local community economy with quick home drop-offs right from your familiar shops.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <!-- VIEW 2: DEDICATED LIVE RADAR MAP VIEW -->
+    <section class="tab-view" id="view-map">
+      <div class="container section-container">
+        <div class="page-header-box">
+          <div class="badge-accent"><i class="fa-solid fa-map-location-dot"></i> Hyperlocal Radar</div>
+          <h1 class="page-title">Live Neighborhood Shop Map</h1>
+          <p class="page-desc">Visual radar of all neighborhood physical merchants. Registered shops are automatically marked on the map with live open/closed status, distance, and direct merchant contact.</p>
+        </div>
+
+        <div class="radar-map-dashboard spotlight-card">
+          <div class="radar-map-toolbar">
+            <div class="radar-toolbar-left">
+              <span class="live-dot"></span>
+              <strong>Civil Lines, Sector 4 & Surrounding Radius</strong>
+              <span class="badge-info" id="radarTotalCount">6 Registered Stores</span>
+            </div>
+            <div class="radar-toolbar-right">
+              <button class="btn btn-sm btn-emerald" onclick="openShopRegistrationModal()">
+                <i class="fa-solid fa-plus-circle"></i> Register New Store On Map
+              </button>
+              <button class="btn btn-sm btn-outline" onclick="locateUserPosition()">
+                <i class="fa-solid fa-crosshairs"></i> My Location
+              </button>
+              <button class="btn btn-sm btn-outline" onclick="toggleMapTileStyle()">
+                <i class="fa-solid fa-layer-group"></i> Toggle Theme
+              </button>
+            </div>
+          </div>
+
+          <div id="dedicatedRadarMap" class="dedicated-radar-map-view"></div>
+
+          <div class="map-legend-bar">
+            <div class="legend-item"><span class="legend-dot open"></span> Store Open Now</div>
+            <div class="legend-item"><span class="legend-dot closed"></span> Store Closed</div>
+            <div class="legend-item"><span class="legend-dot new"></span> Newly Registered</div>
+            <div class="legend-item"><span class="legend-dot user"></span> Your GPS Center</div>
+            <div class="legend-tip"><i class="fa-solid fa-location-crosshairs"></i> Click any pin to inspect stock & order</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 3: LIVE PRODUCT AVAILABILITY SEARCH VIEW -->
+    <section class="tab-view" id="view-products">
+      <div class="container section-container">
+        <div class="page-header-box">
+          <div class="badge-accent"><i class="fa-solid fa-radar"></i> Live Inventory Engine</div>
+          <h1 class="page-title">Live Product Availability Checker</h1>
+          <p class="page-desc">Search for specific products across all nearby neighborhood stores and see exact stock levels before you step outside.</p>
+        </div>
+
+        <!-- Product Search Filter Box -->
+        <div class="product-filter-bar spotlight-card">
+          <div class="product-search-input-wrap">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="productSearchInput" placeholder="Search product name (e.g. Paracetamol, Milk, Whole Wheat Atta, HDMI Cable, Croissant)..." oninput="filterLiveProducts()">
+          </div>
+          <div class="product-stock-filter">
+            <label><input type="checkbox" id="onlyInStockCheck" onchange="filterLiveProducts()"> Only Show "In Stock" Items</label>
+          </div>
+        </div>
+
+        <!-- Products Grid -->
+        <div class="products-master-grid" id="productsMasterGrid">
+          <!-- Rendered dynamically by app.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 3: SHOPKEEPER DASHBOARD & REGISTRATION PORTAL -->
+    <section class="tab-view" id="view-merchant">
+      <div class="container section-container">
+        
+        <!-- Merchant Portal Header -->
+        <div class="merchant-portal-header spotlight-card">
+          <div class="merchant-hero-content">
+            <div class="badge-accent"><i class="fa-solid fa-store"></i> Merchant Operations Hub</div>
+            <h2>Local Shopkeeper Digital Command Center</h2>
+            <p>Empowering local mom-and-pop shops to compete digitally, broadcast live open/closed status, manage product stock, and accept home orders without costly platform fees.</p>
+          </div>
+
+          <!-- Live Toggle Switch for Shop Status -->
+          <div class="shop-status-toggle-card">
+            <span class="status-indicator-title">Your Live Store Status:</span>
+            <div class="toggle-switch-wrapper">
+              <label class="switch">
+                <input type="checkbox" id="merchantLiveToggle" checked onchange="toggleMerchantStoreStatus(this.checked)">
+                <span class="slider round"></span>
+              </label>
+              <span class="status-label-active" id="merchantLiveStatusLabel">STORE IS OPEN</span>
+            </div>
+            <p class="status-helper-text" id="statusHelperText">Customers can currently see your shop as <strong>OPEN</strong> and send delivery requests.</p>
+          </div>
+        </div>
+
+        <!-- Merchant Dashboard Quick Metrics -->
+        <div class="merchant-metrics-grid">
+          <div class="m-metric-card spotlight-card">
+            <div class="m-metric-icon"><i class="fa-solid fa-eye text-primary"></i></div>
+            <div class="m-metric-data">
+              <h3 id="mMetricViews">342</h3>
+              <p>Nearby Shopper Views Today</p>
+            </div>
+          </div>
+          <div class="m-metric-card spotlight-card">
+            <div class="m-metric-icon"><i class="fa-solid fa-message text-success"></i></div>
+            <div class="m-metric-data">
+              <h3 id="mMetricQueries">18</h3>
+              <p>Customer WhatsApp / Call Leads</p>
+            </div>
+          </div>
+          <div class="m-metric-card spotlight-card">
+            <div class="m-metric-icon"><i class="fa-solid fa-bag-shopping text-warning"></i></div>
+            <div class="m-metric-data">
+              <h3 id="mMetricOrders">7</h3>
+              <p>Active Delivery Requests</p>
+            </div>
+          </div>
+          <div class="m-metric-card spotlight-card">
+            <div class="m-metric-icon"><i class="fa-solid fa-box text-cyan"></i></div>
+            <div class="m-metric-data">
+              <h3 id="mMetricInventory">24</h3>
+              <p>Products in Catalog</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Merchant Action Split Layout -->
+        <div class="merchant-split-layout">
+          
+          <!-- Column 1: Add New Product Form -->
+          <div class="merchant-card spotlight-card">
+            <div class="card-title-bar">
+              <h3><i class="fa-solid fa-plus-circle text-primary"></i> Add / Update Catalog Product</h3>
+              <span class="badge-info">Live Sync</span>
+            </div>
+            <form id="merchantAddProductForm" onsubmit="handleMerchantAddProduct(event)">
+              <div class="form-group">
+                <label>Product Name *</label>
+                <input type="text" id="mProdName" placeholder="e.g. Organic Almond Milk 1L" required>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group col-half">
+                  <label>Category *</label>
+                  <select id="mProdCategory" required>
+                    <option value="Grocery">Grocery</option>
+                    <option value="Dairy & Bakery">Dairy & Bakery</option>
+                    <option value="Healthcare & Pharmacy">Healthcare & Pharmacy</option>
+                    <option value="Electronics">Electronics</option>
+                    <option value="Hardware">Hardware & Tools</option>
+                  </select>
+                </div>
+                <div class="form-group col-half">
+                  <label>Price (₹) *</label>
+                  <input type="number" id="mProdPrice" placeholder="e.g. 180" min="1" required>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group col-half">
+                  <label>Stock Status *</label>
+                  <select id="mProdStatus" required>
+                    <option value="in_stock">🟢 In Stock (Ready)</option>
+                    <option value="low_stock">🟡 Low Stock (< 5 items)</option>
+                    <option value="out_of_stock">🔴 Out of Stock</option>
+                  </select>
+                </div>
+                <div class="form-group col-half">
+                  <label>Unit / Quantity</label>
+                  <input type="text" id="mProdUnit" placeholder="e.g. 500g, 1 Pack, 1 Unit">
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-primary full-width">
+                <i class="fa-solid fa-cloud-arrow-up"></i> Publish To My Live Store
+              </button>
+            </form>
+          </div>
+
+          <!-- Column 2: Incoming Delivery & Order Requests -->
+          <div class="merchant-card spotlight-card">
+            <div class="card-title-bar">
+              <h3><i class="fa-solid fa-bell text-warning"></i> Incoming Customer Orders & Queries</h3>
+              <span class="badge-live-pulse" id="mOrderCountBadge">3 Active</span>
+            </div>
+
+            <div class="merchant-orders-list" id="merchantOrdersList">
+              <!-- Rendered dynamically -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Shop Registration Promo Card for New Merchants -->
+        <div class="register-shop-cta spotlight-card">
+          <div class="cta-inner">
+            <div class="cta-text">
+              <h3>Are you a local shopkeeper wanting to join?</h3>
+              <p>Get your shop registered on Nearby Shop Network in under 5 minutes with zero upfront listing fees.</p>
+            </div>
+            <button class="btn btn-emerald btn-lg" onclick="openShopRegistrationModal()">
+              <i class="fa-solid fa-file-signature"></i> Register Your Shop Now
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- VIEW 4: PRESENTATION & PITCH DECK (UTKRISHT CHAUDHARY PRESENTATION) -->
+    <section class="tab-view" id="view-presentation">
+      <div class="container section-container">
+        
+        <!-- Presentation Title Banner -->
+        <div class="pitch-header-banner spotlight-card">
+          <div class="pitch-badge">
+            <i class="fa-solid fa-award"></i> Project Presentation • Academic & Business Blueprint
+          </div>
+          <h1 class="pitch-title">Nearby Shop Network</h1>
+          <p class="pitch-tagline">Smart Local Shopping & Shop Discovery Application</p>
+          
+          <div class="presenter-card">
+            <div class="presenter-avatar"><i class="fa-solid fa-user-graduate"></i></div>
+            <div class="presenter-info">
+              <span class="presenter-label">Presented by</span>
+              <h3 class="presenter-name">Utkrisht Chaudhary</h3>
+              <p class="presenter-deg">B.Tech Mechanical Engineering</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interactive Slide Navigation Controller -->
+        <div class="presentation-deck-controller spotlight-card">
+          <div class="controller-header">
+            <div class="slide-indicator">
+              Slide <strong id="currentSlideNum">01</strong> of <strong>15</strong>:
+              <span class="slide-topic-badge" id="slideTopicBadge">VISION & PROJECT PROFILE</span>
+            </div>
+            <div class="slide-nav-btns">
+              <button class="btn btn-sm btn-outline" id="prevSlideBtn" onclick="prevSlide()"><i class="fa-solid fa-chevron-left"></i> Previous</button>
+              <button class="btn btn-sm btn-primary" id="nextSlideBtn" onclick="nextSlide()">Next <i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+          </div>
+
+          <!-- Slide Content Stage -->
+          <div class="slide-stage" id="slideStage">
+            <!-- Injected by JavaScript based on currentSlideIndex -->
+          </div>
+
+          <!-- Slide Quick Jump Grid -->
+          <div class="slide-thumbnails-bar" id="slideThumbnailsBar">
+            <!-- Generated dynamically -->
+          </div>
+        </div>
+
+        <!-- Interactive Fund Utilization Calculator (Slide 10 Feature Highlight) -->
+        <div class="fund-calculator-section spotlight-card">
+          <div class="fund-header">
+            <div>
+              <span class="badge-accent">Slide 10 Deep Dive</span>
+              <h2>₹5,00,000 Initial Fund Allocation Breakdown</h2>
+              <p>Planning estimate for an agile local minimum viable product (MVP) launch</p>
+            </div>
+            <div class="total-fund-pill">
+              <span>TOTAL CAPITAL</span>
+              <strong>₹5,00,000</strong>
+            </div>
+          </div>
+
+          <div class="fund-grid">
+            <div class="fund-item">
+              <div class="fund-item-top">
+                <span>Mobile & Backend Dev</span>
+                <strong>₹1,50,000 (30%)</strong>
+              </div>
+              <div class="progress-bar"><div class="progress-fill" style="width: 30%; background: #6366f1;"></div></div>
+              <p class="fund-desc">Native Android/iOS app, resilient Node/Go backend API, real-time database.</p>
+            </div>
+
+            <div class="fund-item">
+              <div class="fund-item-top">
+                <span>UI/UX Design & QA</span>
+                <strong>₹75,000 (15%)</strong>
+              </div>
+              <div class="progress-bar"><div class="progress-fill" style="width: 15%; background: #06b6d4;"></div></div>
+              <p class="fund-desc">Frictionless user experience, interactive prototyping, testing and usability validation.</p>
+            </div>
+
+            <div class="fund-item">
+              <div class="fund-item-top">
+                <span>Cloud, DB & Security</span>
+                <strong>₹50,000 (10%)</strong>
+              </div>
+              <div class="progress-bar"><div class="progress-fill" style="width: 10%; background: #10b981;"></div></div>
+              <p class="fund-desc">Secure cloud hosting, encrypted storage, domain, SSL & authentication layers.</p>
+            </div>
+
+            <div class="fund-item">
+              <div class="fund-item-top">
+                <span>Shopkeeper Onboarding</span>
+                <strong>₹75,000 (15%)</strong>
+              </div>
+              <div class="progress-bar"><div class="progress-fill" style="width: 15%; background: #f59e0b;"></div></div>
+              <p class="fund-desc">Ground-level field representatives to visit, verify and train local shop owners.</p>
+            </div>
+
+            <div class="fund-item">
+              <div class="fund-item-top">
+                <span>Marketing & Acquisition</span>
+                <strong>₹75,000 (15%)</strong>
+              </div>
+              <div class="progress-bar"><div class="progress-fill" style="width: 15%; background: #ec4899;"></div></div>
+              <p class="fund-desc">Hyperlocal neighborhood campaigns, pamphlets, QR standees, community referral.</p>
+            </div>
+
+            <div class="fund-item">
+              <div class="fund-item-top">
+                <span>Maintenance & Contingency</span>
+                <strong>₹50,000 (10%)</strong>
+              </div>
+              <div class="progress-bar"><div class="progress-fill" style="width: 10%; background: #8b5cf6;"></div></div>
+              <p class="fund-desc">Emergency buffer, bug fixes, operational support, legal and registration costs.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5-Phase Roadmap Visualizer (Slide 13) -->
+        <div class="roadmap-section spotlight-card">
+          <div class="badge-accent">Slide 13 Strategic Roadmap</div>
+          <h2>Phased Scaling & Feature Milestones</h2>
+          <div class="roadmap-timeline">
+            <div class="roadmap-step">
+              <div class="step-badge">Phase 1</div>
+              <h4>Core Discovery</h4>
+              <p>Shop registration, live open/closed timings, directory search, geolocation filter.</p>
+            </div>
+            <div class="roadmap-step">
+              <div class="step-badge">Phase 2</div>
+              <h4>Trust & Nav</h4>
+              <p>Customer reviews, verified badges, turn-by-turn map navigation to shopfronts.</p>
+            </div>
+            <div class="roadmap-step">
+              <div class="step-badge">Phase 3</div>
+              <h4>Digital Orders</h4>
+              <p>In-app shopping cart, UPI & digital payments, instant WhatsApp dispatch receipts.</p>
+            </div>
+            <div class="roadmap-step">
+              <div class="step-badge">Phase 4</div>
+              <h4>Hyperlocal Logistics</h4>
+              <p>Local neighborhood delivery partner assignment and live tracking on map.</p>
+            </div>
+            <div class="roadmap-step">
+              <div class="step-badge">Phase 5</div>
+              <h4>AI & Multi-City</h4>
+              <p>AI personalized product recommendations, merchant analytics, scaling to 10+ cities.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- SHOP DETAILS MODAL -->
+  <div class="modal-overlay" id="shopDetailsModal" onclick="closeModalOnBackdrop(event, 'shopDetailsModal')">
+    <div class="modal-container shop-modal-container">
+      <button class="modal-close-btn" onclick="closeModal('shopDetailsModal')"><i class="fa-solid fa-xmark"></i></button>
+      <div id="shopModalContent">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- AUTHENTICATION (LOGIN / SIGN UP) MODAL -->
+  <div class="modal-overlay" id="authModal" onclick="closeModalOnBackdrop(event, 'authModal')">
+    <div class="modal-container auth-modal-box">
+      <button class="modal-close-btn" onclick="closeModal('authModal')"><i class="fa-solid fa-xmark"></i></button>
+      
+      <div class="auth-header">
+        <div class="auth-icon-circle"><i class="fa-solid fa-lock"></i></div>
+        <h2 id="authModalTitle">Welcome to NearbyShopNet</h2>
+        <p id="authModalSubtitle">Sign in to check live stock, contact shopkeepers, or manage your shop</p>
+      </div>
+
+      <!-- Role Selector Tabs -->
+      <div class="auth-role-tabs">
+        <button class="auth-role-tab active" id="customerRoleTab" onclick="setAuthRole('customer')">
+          <i class="fa-solid fa-user"></i> Customer / Shopper
+        </button>
+        <button class="auth-role-tab" id="shopkeeperRoleTab" onclick="setAuthRole('shopkeeper')">
+          <i class="fa-solid fa-store"></i> Shopkeeper / Merchant
+        </button>
+      </div>
+
+      <!-- Mode Toggle (Sign In vs Register) -->
+      <div class="auth-mode-switch">
+        <button class="mode-tab active" id="modeLoginTab" onclick="setAuthMode('login')">Sign In</button>
+        <button class="mode-tab" id="modeSignupTab" onclick="setAuthMode('signup')">Create Account</button>
+      </div>
+
+      <!-- Auth Form -->
+      <form id="authForm" onsubmit="handleAuthSubmit(event)">
+        <div class="form-group" id="nameGroup" style="display:none;">
+          <label>Full Name</label>
+          <div class="input-with-icon">
+            <i class="fa-solid fa-id-card"></i>
+            <input type="text" id="authName" placeholder="Enter your full name">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Email Address</label>
+          <div class="input-with-icon">
+            <i class="fa-regular fa-envelope"></i>
+            <input type="email" id="authEmail" placeholder="you@example.com" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Password</label>
+          <div class="input-with-icon">
+            <i class="fa-solid fa-key"></i>
+            <input type="password" id="authPassword" placeholder="••••••••" required>
+          </div>
+        </div>
+
+        <div class="form-group" id="shopNameGroup" style="display:none;">
+          <label>Shop / Business Name</label>
+          <div class="input-with-icon">
+            <i class="fa-solid fa-shop"></i>
+            <input type="text" id="authShopName" placeholder="e.g. Gupta Daily Mart">
+          </div>
+        </div>
+
+        <!-- Quick Demo Accounts Auto-fill -->
+        <div class="demo-login-box">
+          <span>Try quick demo credentials:</span>
+          <div class="demo-buttons">
+            <button type="button" class="btn-demo" onclick="fillDemoCredentials('customer')">
+              <i class="fa-solid fa-user"></i> Demo Customer
+            </button>
+            <button type="button" class="btn-demo" onclick="fillDemoCredentials('merchant')">
+              <i class="fa-solid fa-store"></i> Demo Shopkeeper
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary full-width btn-lg" id="authSubmitBtn">
+          Sign In
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- SHOP REGISTRATION MODAL -->
+  <div class="modal-overlay" id="registerShopModal" onclick="closeModalOnBackdrop(event, 'registerShopModal')">
+    <div class="modal-container shop-reg-modal-box">
+      <button class="modal-close-btn" onclick="closeModal('registerShopModal')"><i class="fa-solid fa-xmark"></i></button>
+      
+      <div class="auth-header">
+        <div class="auth-icon-circle icon-emerald"><i class="fa-solid fa-file-signature"></i></div>
+        <h2>Register Your Shop</h2>
+        <p>Get listed on Nearby Shop Network and start receiving local inquiries today</p>
+      </div>
+
+      <form id="shopRegForm" onsubmit="handleShopRegistration(event)">
+        <div class="form-row">
+          <div class="form-group col-half">
+            <label>Shop Name *</label>
+            <input type="text" id="regShopName" placeholder="e.g. Chaudhary Super Store" required>
+          </div>
+          <div class="form-group col-half">
+            <label>Category *</label>
+            <select id="regCategory" required>
+              <option value="grocery">Groceries & Supermarket</option>
+              <option value="pharmacy">Pharmacy & Health</option>
+              <option value="electronics">Electronics & Repair</option>
+              <option value="bakery">Bakery & Cafe</option>
+              <option value="hardware">Hardware & Electricals</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-half">
+            <label>Owner Name *</label>
+            <input type="text" id="regOwnerName" placeholder="Your name" required>
+          </div>
+          <div class="form-group col-half">
+            <label>WhatsApp / Phone Number *</label>
+            <input type="tel" id="regPhone" placeholder="+91 98765 43210" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Shop Full Address *</label>
+          <input type="text" id="regAddress" placeholder="Shop No., Street, Landmark, Area" required>
+        </div>
+
+        <!-- Interactive Shop Location Picker on Map -->
+        <div class="reg-map-picker-group">
+          <div class="reg-map-header">
+            <label class="reg-map-label">
+              <i class="fa-solid fa-map-pin text-primary"></i> Pin Your Shop Location On The Map *
+            </label>
+            <button type="button" class="btn btn-xs btn-outline btn-locate-reg" onclick="detectShopkeeperLocation()">
+              <i class="fa-solid fa-crosshairs text-cyan"></i> Use My GPS Location
+            </button>
+          </div>
+          <p class="reg-map-help">
+            <i class="fa-solid fa-hand-pointer"></i> Click anywhere on the map or drag the pin to set your storefront's exact location.
+          </p>
+          
+          <div id="regLocationMap" class="reg-leaflet-map"></div>
+          
+          <div class="reg-coord-status">
+            <span class="coord-tag">
+              <i class="fa-solid fa-compass"></i> Lat: <strong id="regLatText">28.6750</strong>
+            </span>
+            <span class="coord-tag">
+              <i class="fa-solid fa-compass"></i> Lng: <strong id="regLngText">77.2250</strong>
+            </span>
+            <span class="coord-note">
+              <i class="fa-solid fa-circle-check text-emerald"></i> Marked live on neighborhood map upon registration
+            </span>
+          </div>
+
+          <input type="hidden" id="regLat" value="28.6750">
+          <input type="hidden" id="regLng" value="77.2250">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-half">
+            <label>Opening Time</label>
+            <input type="time" id="regOpenTime" value="08:00">
+          </div>
+          <div class="form-group col-half">
+            <label>Closing Time</label>
+            <input type="time" id="regCloseTime" value="22:00">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="regDeliveryCheck" checked>
+            <span>Offer Home Delivery in neighborhood radius</span>
+          </label>
+        </div>
+
+        <button type="submit" class="btn btn-emerald full-width btn-lg">
+          <i class="fa-solid fa-check"></i> Submit Shop for Instant Listing
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- CART / ORDER REQUEST DRAWER -->
+  <div class="cart-drawer-overlay" id="cartDrawerOverlay" onclick="toggleCartDrawer()"></div>
+  <aside class="cart-drawer" id="cartDrawer">
+    <div class="cart-drawer-header">
+      <div class="cart-title">
+        <i class="fa-solid fa-bag-shopping text-primary"></i>
+        <h3>Your Order Request</h3>
+      </div>
+      <button class="cart-close-btn" onclick="toggleCartDrawer()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+
+    <!-- Active Cart Items List -->
+    <div class="cart-items-body" id="cartItemsContainer">
+      <!-- Injected by JavaScript -->
+    </div>
+
+    <!-- Cart Footer & Checkout Form -->
+    <div class="cart-drawer-footer" id="cartDrawerFooter">
+      <div class="cart-summary-line">
+        <span>Estimated Total</span>
+        <strong id="cartSubtotal">₹0</strong>
+      </div>
+
+      <div class="delivery-type-selector">
+        <label class="radio-option">
+          <input type="radio" name="orderType" value="pickup" checked onchange="updateOrderDeliveryFee()">
+          <span><i class="fa-solid fa-person-walking"></i> In-Store Pickup</span>
+        </label>
+        <label class="radio-option">
+          <input type="radio" name="orderType" value="delivery" onchange="updateOrderDeliveryFee()">
+          <span><i class="fa-solid fa-motorcycle"></i> Home Delivery</span>
+        </label>
+      </div>
+
+      <div class="form-group">
+        <input type="text" id="checkoutPhone" placeholder="Your Mobile Number (+91...)" required>
+      </div>
+
+      <div class="form-group" id="deliveryAddressGroup" style="display:none;">
+        <input type="text" id="checkoutAddress" placeholder="Delivery House / Flat & Street">
+      </div>
+
+      <button class="btn btn-primary full-width btn-lg" onclick="handlePlaceOrder()">
+        <i class="fa-solid fa-paper-plane"></i> Send Order Request to Shopkeeper
+      </button>
+    </div>
+  </aside>
+
+  <!-- CONTACT / WHATSAPP MODAL -->
+  <div class="modal-overlay" id="contactModal" onclick="closeModalOnBackdrop(event, 'contactModal')">
+    <div class="modal-container contact-modal-box">
+      <button class="modal-close-btn" onclick="closeModal('contactModal')"><i class="fa-solid fa-xmark"></i></button>
+      <div id="contactModalContent">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- FOOTER -->
+  <footer class="app-footer">
+    <div class="container footer-content">
+      <div class="footer-left">
+        <div class="logo-group">
+          <div class="logo-icon-wrap">
+            <i class="fa-solid fa-shop"></i>
+          </div>
+          <div class="logo-meta">
+            <span class="logo-title">NearbyShopNet</span>
+            <span class="logo-sub">Smart Local Shopping & Shop Discovery</span>
+          </div>
+        </div>
+        <p class="footer-tag">Building digital connectivity between local neighborhood shopkeepers and smart customers.</p>
+        <p class="footer-credits">Academic Project Presentation by: <strong>Utkrisht Chaudhary</strong> (B.Tech Mechanical Engineering)</p>
+      </div>
+
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <a href="#" onclick="switchTab('explore')">Discover Shops</a>
+          <a href="#" onclick="switchTab('products')">Live Availability</a>
+          <a href="#" onclick="switchTab('merchant')">Shopkeeper Portal</a>
+          <a href="#" onclick="switchTab('presentation')">Pitch Deck & Vision</a>
+        </div>
+        <div class="footer-col">
+          <h4>Key Use</h4>
+          <a href="#">Check Timings</a>
+          <a href="#">Confirm Availability</a>
+          <a href="#">Direct WhatsApp Chat</a>
+          <a href="#">Local Home Delivery</a>
+        </div>
+        <div class="footer-col">
+          <h4>Account</h4>
+          <a href="#" onclick="openAuthModal('login')">Customer Sign In</a>
+          <a href="#" onclick="openAuthModal('shopkeeper')">Merchant Login</a>
+          <a href="#" onclick="openShopRegistrationModal()">Register New Store</a>
+        </div>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <p>© 2026 Nearby Shop Network (NSN). Project Profile & System Architecture by Utkrisht Chaudhary.</p>
+      <div class="footer-badge-pill">
+        <span class="live-dot"></span> System Operational
+      </div>
+    </div>
+  </footer>
+
+  <!-- Confetti Script for Celebrations -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <!-- Leaflet JS for Interactive Map -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+  <!-- Application Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
