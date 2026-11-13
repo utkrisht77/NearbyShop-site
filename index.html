@@ -269,10 +269,178 @@
                             Logout
                         </button>
                     </div>
+
+                    <!-- THREE-DOT ALL OPTIONS BUTTON -->
+                    <div class="relative">
+                        <button onclick="toggleThreeDotMenu()" id="three-dot-menu-btn" title="All Main Options & Shortcuts" class="p-2 sm:p-2.5 rounded-full glass-card hover:bg-white/10 text-gray-200 hover:text-white transition-all border border-white/15 flex items-center justify-center hover:border-purple-400 shadow-lg">
+                            <svg class="w-5 h-5 text-gray-200" fill="currentColor" viewBox="0 0 24 24">
+                                <circle cx="12" cy="5" r="2.2"/>
+                                <circle cx="12" cy="12" r="2.2"/>
+                                <circle cx="12" cy="19" r="2.2"/>
+                            </svg>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     </nav>
+
+    <!-- THREE-DOT MAIN OPTIONS ACTION MENU MODAL -->
+    <div id="three-dot-menu-modal" class="fixed inset-0 z-[90] hidden items-center justify-center p-4 bg-black/80 backdrop-blur-md overflow-y-auto">
+        <div class="glass-panel w-full max-w-2xl rounded-3xl border border-white/15 shadow-2xl overflow-hidden my-6">
+            <!-- Modal Header -->
+            <div class="p-5 bg-gradient-to-r from-navy-900 via-indigo-950/80 to-navy-900 border-b border-white/10 flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-accent-blue via-accent-violet to-purple-600 flex items-center justify-center text-white font-extrabold shadow-glow-violet">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <circle cx="12" cy="5" r="2.2"/>
+                            <circle cx="12" cy="12" r="2.2"/>
+                            <circle cx="12" cy="19" r="2.2"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 border border-purple-400/30">Master Navigation</span>
+                            <span class="text-[10px] text-gray-400 font-mono">12 Main Options</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mt-0.5">NearbyShopNet Portal Options</h3>
+                    </div>
+                </div>
+                <button onclick="toggleThreeDotMenu()" class="p-2 rounded-full bg-white/10 hover:bg-white/20 text-gray-300 hover:text-white transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+
+            <!-- Options Grid -->
+            <div class="p-5 sm:p-6 space-y-5 max-h-[75vh] overflow-y-auto">
+                <!-- Group 1: Core Shopping & Discovery -->
+                <div>
+                    <h4 class="text-[11px] font-bold uppercase tracking-wider text-accent-blue mb-2.5 flex items-center gap-1.5">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                        Hyperlocal Shopping & Discovery
+                    </h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                        <div onclick="selectThreeDotOption('home')" class="p-3.5 rounded-2xl bg-navy-900/80 hover:bg-white/10 border border-white/5 cursor-pointer transition-all flex items-center gap-3 group">
+                            <div class="w-10 h-10 rounded-xl bg-accent-blue/15 text-accent-blue flex items-center justify-center text-lg flex-shrink-0 group-hover:scale-105 transition-transform">🏠</div>
+                            <div class="overflow-hidden">
+                                <h5 class="text-xs font-bold text-white group-hover:text-accent-blue transition-colors">Home Page</h5>
+                                <p class="text-[11px] text-gray-400 truncate">Neighborhood discovery & platform overview</p>
+                            </div>
+                        </div>
+
+                        <div onclick="selectThreeDotOption('discover')" class="p-3.5 rounded-2xl bg-navy-900/80 hover:bg-white/10 border border-white/5 cursor-pointer transition-all flex items-center gap-3 group">
+                            <div class="w-10 h-10 rounded-xl bg-purple-500/15 text-purple-300 flex items-center justify-center text-lg flex-shrink-0 group-hover:scale-105 transition-transform">🛍️</div>
+                            <div class="overflow-hidden">
+                                <h5 class="text-xs font-bold text-white group-hover:text-purple-300 transition-colors">Discover 500+ Shops</h5>
+                                <p class="text-[11px] text-gray-400 truncate">Sectors 1-63, Booths & SCO directory</p>
+                            </div>
+                        </div>
+
+                        <div onclick="selectThreeDotOption('products')" class="p-3.5 rounded-2xl bg-navy-900/80 hover:bg-white/10 border border-white/5 cursor-pointer transition-all flex items-center gap-3 group">
+                            <div class="w-10 h-10 rounded-xl bg-accent-emerald/15 text-accent-emerald flex items-center justify-center text-lg flex-shrink-0 group-hover:scale-105 transition-transform">📦</div>
+                            <div class="overflow-hidden">
+                                <h5 class="text-xs font-bold text-white group-hover:text-accent-emerald transition-colors">Live Products & Prices</h5>
+                                <p class="text-[11px] text-gray-400 truncate">Stock check, brands, instant cart addition</p>
+                            </div>
+                        </div>
+
+                        <div onclick="selectThreeDotOption('map-section')" class="p-3.5 rounded-2xl bg-navy-900/80 hover:bg-white/10 border border-white/5 cursor-pointer transition-all flex items-center gap-3 group">
+                            <div class="w-10 h-10 rounded-xl bg-blue-500/15 text-blue-300 flex items-center justify-center text-lg flex-shrink-0 group-hover:scale-105 transition-transform">🗺️</div>
+                            <div class="overflow-hidden">
+                                <h5 class="text-xs font-bold text-white group-hover:text-blue-300 transition-colors">Live Satellite & Terrain Map</h5>
+                                <p class="text-[11px] text-gray-400 truncate">Real GPS live human pin & shop status</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Group 2: AI & Smart Payments -->
+                <div>
+                    <h4 class="text-[11px] font-bold uppercase tracking-wider text-purple-300 mb-2.5 flex items-center gap-1.5">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                        AI Concierge & Instant Payments
+                    </h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                        <div onclick="selectThreeDotOption('gemini')" class="p-3.5 rounded-2xl bg-purple-950/40 hover:bg-purple-900/40 border border-purple-500/30 cursor-pointer transition-all flex items-center gap-3 group shadow-glow-gemini">
+                            <div class="w-10 h-10 rounded-xl bg-purple-500/20 text-purple-300 flex items-center justify-center text-lg flex-shrink-0 group-hover:scale-105 transition-transform">🤖</div>
+                            <div class="overflow-hidden">
+                                <h5 class="text-xs font-bold text-white group-hover:text-purple-200 transition-colors flex items-center gap-1">
+                                    <span>Ask Gemini AI Concierge</span>
+                                    <span class="text-[9px] px-1 rounded bg-purple-500/40 text-purple-100">AI</span>
+                                </h5>
+                                <p class="text-[11px] text-gray-300 truncate">Smart grocery search, recipes, local deals</p>
+                            </div>
+                        </div>
+
+                        <div onclick="selectThreeDotOption('upi-pay')" class="p-3.5 rounded-2xl bg-emerald-950/40 hover:bg-emerald-900/40 border border-accent-emerald/40 cursor-pointer transition-all flex items-center gap-3 group">
+                            <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-accent-emerald flex items-center justify-center text-lg flex-shrink-0 group-hover:scale-105 transition-transform">⚡</div>
+                            <div class="overflow-hidden">
+                                <h5 class="text-xs font-bold text-white group-hover:text-accent-emerald transition-colors">Instant UPI (8219727646@upi)</h5>
+                                <p class="text-[11px] text-gray-300 truncate font-mono">Scan QR or pay merchant VPA directly</p>
+                            </div>
+                        </div>
+
+                        <div onclick="selectThreeDotOption('cart')" class="p-3.5 rounded-2xl bg-navy-900/80 hover:bg-white/10 border border-white/5 cursor-pointer transition-all flex items-center gap-3 group">
+                            <div class="w-10 h-10 rounded-xl bg-yellow-500/15 text-yellow-400 flex items-center justify-center text-lg flex-shrink-0 group-hover:scale-105 transition-transform">🛒</div>
+                            <div class="overflow-hidden">
+                                <h5 class="text-xs font-bold text-white group-hover:text-yellow-400 transition-colors">Your Basket & Checkout</h5>
+                                <p class="text-[11px] text-gray-400 truncate">Review products, COD full address & UPI</p>
+                            </div>
+                        </div>
+
+                        <div onclick="selectThreeDotOption('locate')" class="p-3.5 rounded-2xl bg-navy-900/80 hover:bg-white/10 border border-white/5 cursor-pointer transition-all flex items-center gap-3 group">
+                            <div class="w-10 h-10 rounded-xl bg-blue-500/15 text-blue-300 flex items-center justify-center text-lg flex-shrink-0 group-hover:scale-105 transition-transform">📍</div>
+                            <div class="overflow-hidden">
+                                <h5 class="text-xs font-bold text-white group-hover:text-blue-300 transition-colors">Sync Hardware GPS</h5>
+                                <p class="text-[11px] text-gray-400 truncate">Calibrate live satellite coordinates & pin</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Group 3: Merchant & Account Services -->
+                <div>
+                    <h4 class="text-[11px] font-bold uppercase tracking-wider text-accent-emerald mb-2.5 flex items-center gap-1.5">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                        Merchant Portal & Account
+                    </h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                        <div onclick="selectThreeDotOption('list-shop')" class="p-3.5 rounded-2xl bg-navy-900/80 hover:bg-white/10 border border-white/5 cursor-pointer transition-all flex items-center gap-3 group">
+                            <div class="w-10 h-10 rounded-xl bg-accent-emerald/15 text-accent-emerald flex items-center justify-center text-lg flex-shrink-0 group-hover:scale-105 transition-transform">🏪</div>
+                            <div class="overflow-hidden">
+                                <h5 class="text-xs font-bold text-white group-hover:text-accent-emerald transition-colors">List Your Shop Live</h5>
+                                <p class="text-[11px] text-gray-400 truncate">Onboard your Chandigarh storefront</p>
+                            </div>
+                        </div>
+
+                        <div onclick="selectThreeDotOption('dashboard')" class="p-3.5 rounded-2xl bg-navy-900/80 hover:bg-white/10 border border-white/5 cursor-pointer transition-all flex items-center gap-3 group">
+                            <div class="w-10 h-10 rounded-xl bg-indigo-500/15 text-indigo-300 flex items-center justify-center text-lg flex-shrink-0 group-hover:scale-105 transition-transform">📊</div>
+                            <div class="overflow-hidden">
+                                <h5 class="text-xs font-bold text-white group-hover:text-indigo-300 transition-colors">Merchant Portal & Orders</h5>
+                                <p class="text-[11px] text-gray-400 truncate">Manage live inventory, stock & settlements</p>
+                            </div>
+                        </div>
+
+                        <div onclick="selectThreeDotOption('auth')" class="p-3.5 rounded-2xl bg-navy-900/80 hover:bg-white/10 border border-white/5 cursor-pointer transition-all flex items-center gap-3 group">
+                            <div class="w-10 h-10 rounded-xl bg-accent-blue/15 text-accent-blue flex items-center justify-center text-lg flex-shrink-0 group-hover:scale-105 transition-transform">🔐</div>
+                            <div class="overflow-hidden">
+                                <h5 class="text-xs font-bold text-white group-hover:text-accent-blue transition-colors">Unified Login Gateway</h5>
+                                <p class="text-[11px] text-gray-400 truncate">Customer, Merchant & Delivery sign in</p>
+                            </div>
+                        </div>
+
+                        <div onclick="selectThreeDotOption('presentation')" class="p-3.5 rounded-2xl bg-navy-900/80 hover:bg-white/10 border border-white/5 cursor-pointer transition-all flex items-center gap-3 group">
+                            <div class="w-10 h-10 rounded-xl bg-gray-700/30 text-gray-300 flex items-center justify-center text-lg flex-shrink-0 group-hover:scale-105 transition-transform">📑</div>
+                            <div class="overflow-hidden">
+                                <h5 class="text-xs font-bold text-white group-hover:text-gray-200 transition-colors">Project Architecture</h5>
+                                <p class="text-[11px] text-gray-400 truncate">Tech stack, Leaflet & system specifications</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- FLOATING GEMINI AI ASSISTANT BUTTON -->
     <div class="fixed bottom-6 right-6 z-[65]">
@@ -393,70 +561,138 @@
                 </div>
             </div>
 
-            <!-- Payment Method Selector (COD & UPI HIGHLIGHTED) -->
+            <!-- Payment Method Selector (COD vs Instant Online Gateway) -->
             <div>
-                <label class="block text-[10px] uppercase tracking-wider text-gray-400 font-semibold mb-1">Select Payment Gateway / Method</label>
-                <div class="grid grid-cols-3 gap-1.5">
-                    <button type="button" id="pay-method-cod" onclick="setOrderPaymentMethod('COD')" class="p-2 rounded-xl border border-white/10 bg-navy-800 text-gray-300 hover:text-white text-center transition-all">
-                        <div class="text-xs font-extrabold text-accent-emerald">₹ COD</div>
-                        <div class="text-[9px] text-gray-200 leading-tight">Cash on Delivery</div>
+                <label class="block text-[10px] uppercase tracking-wider text-gray-400 font-semibold mb-1">Select Payment Method</label>
+                <div class="grid grid-cols-2 gap-2">
+                    <button type="button" id="pay-method-cod" onclick="setOrderPaymentMethod('COD')" class="p-2.5 rounded-xl border border-white/10 bg-navy-800 text-gray-300 hover:text-white text-center transition-all">
+                        <div class="text-xs font-extrabold text-amber-400 flex items-center justify-center gap-1">
+                            <span>💵</span>
+                            <span>Cash on Delivery</span>
+                        </div>
+                        <div class="text-[9px] text-gray-400 leading-tight mt-0.5">Full Address Required</div>
                     </button>
-                    <button type="button" id="pay-method-upi" onclick="setOrderPaymentMethod('UPI')" class="p-2 rounded-xl border border-accent-emerald bg-accent-emerald/20 text-white text-center transition-all shadow-glow-blue">
-                        <div class="text-xs font-bold text-accent-emerald">⚡ Instant UPI</div>
-                        <div class="text-[9px] text-emerald-200 leading-tight">8219727646@upi</div>
-                    </button>
-                    <button type="button" id="pay-method-card" onclick="setOrderPaymentMethod('Card')" class="p-2 rounded-xl border border-white/10 bg-navy-800 text-gray-300 hover:text-white text-center transition-all">
-                        <div class="text-xs font-bold">Card / POS</div>
-                        <div class="text-[9px] text-gray-400 leading-tight">Machine on Spot</div>
+                    <button type="button" id="pay-method-upi" onclick="setOrderPaymentMethod('UPI')" class="p-2.5 rounded-xl border border-accent-emerald bg-accent-emerald/20 text-white text-center transition-all shadow-glow-blue">
+                        <div class="text-xs font-extrabold text-accent-emerald flex items-center justify-center gap-1">
+                            <span>⚡</span>
+                            <span>Online UPI / Card</span>
+                        </div>
+                        <div class="text-[9px] text-emerald-200 leading-tight mt-0.5">8219727646@upi</div>
                     </button>
                 </div>
             </div>
 
-            <!-- DEDICATED UPI PAYMENT BOX (SHOWING 8219727646@upi & QR CODE) -->
-            <div id="upi-payment-details-box" class="p-3.5 rounded-xl bg-gradient-to-br from-navy-800 to-indigo-950/80 border border-accent-emerald/40 space-y-2.5">
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center gap-1.5">
-                        <span class="w-2 h-2 rounded-full bg-accent-emerald animate-ping"></span>
-                        <span class="text-[11px] font-bold uppercase tracking-wider text-accent-emerald">Verified Merchant UPI ID</span>
+            <!-- Dynamic Checkout Form by Payment Method -->
+            <div id="checkout-dynamic-forms" class="space-y-2.5 pt-1">
+                <!-- FORM 1: CASH ON DELIVERY FULL ADDRESS (STRICTLY COLLECTS COMPLETE ADDRESS) -->
+                <div id="checkout-cod-form" class="space-y-2 p-3 rounded-2xl bg-navy-900/90 border border-amber-500/30 hidden">
+                    <div class="flex items-center justify-between pb-1.5 border-b border-white/5">
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-amber-400 flex items-center gap-1">
+                            <span>🏠 Detailed Delivery Address (COD)</span>
+                        </span>
+                        <span class="text-[9px] text-gray-400">Cash at Doorstep</span>
                     </div>
-                    <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 text-[10px] font-bold">Zero Fee</span>
-                </div>
-                
-                <div class="flex items-center justify-between bg-navy-900/90 p-2.5 rounded-xl border border-white/10">
-                    <div class="overflow-hidden">
-                        <p class="text-[10px] text-gray-400 font-medium">Merchant VPA (UPI ID):</p>
-                        <p id="checkout-upi-id-text" class="text-xs font-mono font-bold text-white select-all">8219727646@upi</p>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        <div>
+                            <label class="block text-[9px] uppercase tracking-wider text-gray-400 mb-0.5">Full Legal Name *</label>
+                            <input id="checkout-cod-name" type="text" placeholder="e.g. Gurpreet Singh" class="w-full px-3 py-1.5 rounded-xl bg-navy-950 border border-white/10 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-amber-400">
+                        </div>
+                        <div>
+                            <label class="block text-[9px] uppercase tracking-wider text-gray-400 mb-0.5">Primary Mobile Number *</label>
+                            <input id="checkout-cod-phone" type="tel" placeholder="+91 90000-12345" value="+91 90000-12345" class="w-full px-3 py-1.5 rounded-xl bg-navy-950 border border-white/10 text-xs text-white font-mono placeholder-gray-500 focus:outline-none focus:border-amber-400">
+                        </div>
                     </div>
-                    <button type="button" onclick="copyUpiId('8219727646@upi')" class="px-3 py-1.5 rounded-lg bg-accent-emerald/20 hover:bg-accent-emerald/30 text-accent-emerald text-xs font-bold border border-accent-emerald/40 transition-all flex items-center gap-1">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
-                        Copy
-                    </button>
+
+                    <div>
+                        <label class="block text-[9px] uppercase tracking-wider text-gray-400 mb-0.5">Alternate Phone / WhatsApp (Optional)</label>
+                        <input id="checkout-cod-altphone" type="tel" placeholder="+91 Optional alternate number" class="w-full px-3 py-1.5 rounded-xl bg-navy-950 border border-white/10 text-xs text-white font-mono placeholder-gray-500 focus:outline-none focus:border-amber-400">
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="block text-[9px] uppercase tracking-wider text-gray-400 mb-0.5">House / Flat / SCO / Booth No. *</label>
+                            <input id="checkout-cod-house" type="text" placeholder="e.g. Flat 302 / SCO 44" value="House 142" class="w-full px-3 py-1.5 rounded-xl bg-navy-950 border border-white/10 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-amber-400">
+                        </div>
+                        <div>
+                            <label class="block text-[9px] uppercase tracking-wider text-gray-400 mb-0.5">Street / Road / Sector *</label>
+                            <input id="checkout-cod-street" type="text" placeholder="e.g. Sector 17-E Market" value="Sector 17-E Plaza" class="w-full px-3 py-1.5 rounded-xl bg-navy-950 border border-white/10 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-amber-400">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-2">
+                        <div class="col-span-2">
+                            <label class="block text-[9px] uppercase tracking-wider text-gray-400 mb-0.5">Nearest Landmark *</label>
+                            <input id="checkout-cod-landmark" type="text" placeholder="e.g. Opposite Neelam Cinema" value="Opp. Neelam Cinema" class="w-full px-3 py-1.5 rounded-xl bg-navy-950 border border-white/10 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-amber-400">
+                        </div>
+                        <div class="col-span-1">
+                            <label class="block text-[9px] uppercase tracking-wider text-gray-400 mb-0.5">Pincode *</label>
+                            <input id="checkout-cod-pincode" type="text" maxlength="6" placeholder="160017" value="160017" class="w-full px-3 py-1.5 rounded-xl bg-navy-950 border border-white/10 text-xs text-white font-mono placeholder-gray-500 focus:outline-none focus:border-amber-400">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="block text-[9px] uppercase tracking-wider text-gray-400 mb-0.5">City / Tricity Zone *</label>
+                            <select id="checkout-cod-city" class="w-full px-3 py-1.5 rounded-xl bg-navy-950 border border-white/10 text-xs text-gray-200 focus:outline-none focus:border-amber-400">
+                                <option value="Chandigarh">Chandigarh</option>
+                                <option value="Mohali">Mohali (SAS Nagar)</option>
+                                <option value="Panchkula">Panchkula</option>
+                                <option value="Zirakpur">Zirakpur</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-[9px] uppercase tracking-wider text-gray-400 mb-0.5">Delivery Instructions</label>
+                            <input id="checkout-cod-notes" type="text" placeholder="e.g. Ring bell twice, exact cash" class="w-full px-3 py-1.5 rounded-xl bg-navy-950 border border-white/10 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-amber-400">
+                        </div>
+                    </div>
                 </div>
 
-                <!-- UPI QR Code display -->
-                <div class="flex items-center gap-3 bg-navy-900/80 p-2.5 rounded-xl border border-white/10">
-                    <div class="w-16 h-16 bg-white p-1 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <img id="checkout-upi-qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi%3A%2F%2Fpay%3Fpa%3D8219727646%40upi%26pn%3DNearbyShopNet%26cu%3DINR" alt="UPI QR" class="w-full h-full object-contain">
+                <!-- FORM 2: ONLINE PAYMENT PREVIEW & CUSTOMER DETAILS -->
+                <div id="checkout-online-form" class="space-y-2 p-3 rounded-2xl bg-navy-900/90 border border-accent-emerald/40">
+                    <div class="flex items-center justify-between pb-1.5 border-b border-white/5">
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-accent-emerald flex items-center gap-1">
+                            <span>⚡ Online Payment Details (UPI: 8219727646@upi)</span>
+                        </span>
+                        <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 text-[9px] font-bold">Zero Surcharge</span>
                     </div>
-                    <div class="text-[11px] text-gray-300 leading-tight space-y-1">
-                        <p class="font-bold text-white">Scan with Google Pay, PhonePe, Paytm, or BHIM</p>
-                        <p class="text-[10px] text-gray-400">Scan QR or send to <span class="font-mono text-emerald-300">8219727646@upi</span></p>
-                        <a id="checkout-upi-direct-link" href="upi://pay?pa=8219727646@upi&pn=NearbyShopNet&cu=INR" class="inline-block text-[10px] text-accent-blue font-semibold hover:underline">
-                            Open UPI App Directly →
-                        </a>
+
+                    <!-- Mini UPI preview badge -->
+                    <div class="flex items-center justify-between bg-navy-950 p-2 rounded-xl border border-white/5 text-xs">
+                        <div>
+                            <span class="text-[10px] text-gray-400">Verified Merchant UPI ID:</span>
+                            <p class="font-mono font-bold text-white">8219727646@upi</p>
+                        </div>
+                        <button type="button" onclick="copyUpiId('8219727646@upi')" class="px-2 py-1 rounded-lg bg-accent-emerald/20 text-accent-emerald text-[10px] font-bold">Copy</button>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="block text-[9px] uppercase tracking-wider text-gray-400 mb-0.5">Your Full Name *</label>
+                            <input id="checkout-online-name" type="text" placeholder="Full name" class="w-full px-3 py-1.5 rounded-xl bg-navy-950 border border-white/10 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-accent-emerald">
+                        </div>
+                        <div>
+                            <label class="block text-[9px] uppercase tracking-wider text-gray-400 mb-0.5">Mobile Number *</label>
+                            <input id="checkout-online-phone" type="tel" placeholder="+91 90000-12345" value="+91 90000-12345" class="w-full px-3 py-1.5 rounded-xl bg-navy-950 border border-white/10 text-xs text-white font-mono placeholder-gray-500 focus:outline-none focus:border-accent-emerald">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-[9px] uppercase tracking-wider text-gray-400 mb-0.5">Email for GST & Payment Receipt *</label>
+                        <input id="checkout-online-email" type="email" placeholder="customer@example.com" value="customer@nearbyshopnet-demo.in" class="w-full px-3 py-1.5 rounded-xl bg-navy-950 border border-white/10 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-accent-emerald">
+                    </div>
+
+                    <div>
+                        <label class="block text-[9px] uppercase tracking-wider text-gray-400 mb-0.5">Full Delivery Address (House No, Sector, City) *</label>
+                        <input id="checkout-online-address" type="text" placeholder="House 142, Sector 17-E Plaza, Chandigarh 160017" value="House 142, Sector 17-E Plaza, Chandigarh 160017" class="w-full px-3 py-1.5 rounded-xl bg-navy-950 border border-white/10 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-accent-emerald">
                     </div>
                 </div>
             </div>
 
-            <!-- Customer Address & Phone for Delivery -->
-            <div class="space-y-2 pt-1">
-                <input id="checkout-customer-name" type="text" placeholder="Your Full Name *" class="w-full px-3 py-2 rounded-xl bg-navy-800 border border-white/10 text-xs text-white placeholder-gray-400 focus:outline-none focus:border-accent-emerald">
-                <input id="checkout-customer-phone" type="tel" placeholder="Mobile Number for Order Verification *" value="+91 90000-12345" class="w-full px-3 py-2 rounded-xl bg-navy-800 border border-white/10 text-xs text-white font-mono placeholder-gray-400 focus:outline-none focus:border-accent-emerald">
-                <input id="checkout-customer-address" type="text" placeholder="House/SCO No, Sector, Chandigarh *" value="House 142, Sector 17-E, Chandigarh" class="w-full px-3 py-2 rounded-xl bg-navy-800 border border-white/10 text-xs text-white placeholder-gray-400 focus:outline-none focus:border-accent-emerald">
-            </div>
-
-            <button onclick="placeCustomerOrder()" class="w-full py-3 px-4 bg-gradient-to-r from-accent-emerald via-accent-blue to-accent-violet hover:from-emerald-500 hover:to-purple-500 text-white rounded-xl font-bold text-sm shadow-glow-blue transition-all transform hover:scale-[1.01]">
-                Place Order (<span id="checkout-btn-pay-label">UPI: 8219727646@upi</span>)
+            <!-- Dynamic Action Button: Placed after filling details -->
+            <button id="checkout-action-btn" onclick="handleCheckoutSubmission()" class="w-full py-3.5 px-4 bg-gradient-to-r from-accent-emerald via-accent-blue to-accent-violet hover:from-emerald-500 hover:to-purple-500 text-white rounded-xl font-bold text-sm shadow-glow-blue transition-all transform hover:scale-[1.01] flex items-center justify-center gap-2">
+                <span id="checkout-btn-icon">⚡</span>
+                <span id="checkout-btn-label">Proceed to Online Payment (8219727646@upi)</span>
             </button>
         </div>
     </div>
@@ -464,16 +700,172 @@
     <!-- Cart Overlay -->
     <div id="cart-overlay" onclick="toggleCart()" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-[68] hidden transition-opacity"></div>
 
-    <!-- ORDER CONFIRMATION & UPI MODAL -->
-    <div id="cod-order-modal" class="fixed inset-0 z-[95] hidden items-center justify-center p-4 bg-black/80 backdrop-blur-md overflow-y-auto">
-        <div class="glass-panel w-full max-w-lg rounded-2xl border border-accent-emerald/40 shadow-2xl overflow-hidden p-6 my-8">
+    <!-- ONLINE PAYMENT GATEWAY MODAL (ORDER ONLY CONFIRMED WHEN PAYMENT IS DONE) -->
+    <div id="online-payment-gateway-modal" class="fixed inset-0 z-[96] hidden items-center justify-center p-4 bg-black/85 backdrop-blur-md overflow-y-auto">
+        <div class="glass-panel w-full max-w-lg rounded-3xl border border-accent-emerald/40 shadow-2xl overflow-hidden my-6">
+            <!-- Modal Header -->
+            <div class="p-5 bg-gradient-to-r from-navy-900 via-indigo-950/80 to-navy-900 border-b border-white/10 flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-2xl bg-accent-emerald/20 border border-accent-emerald/40 flex items-center justify-center text-accent-emerald font-bold text-lg shadow-glow-blue">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-accent-emerald/20 text-accent-emerald border border-accent-emerald/40">256-Bit SSL Encrypted Gateway</span>
+                            <span class="text-[10px] text-gray-400 font-mono">Live Checkout</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mt-0.5">NearbyShopNet Payment Gateway</h3>
+                    </div>
+                </div>
+                <button onclick="closeOnlinePaymentModal()" class="p-2 rounded-full bg-white/10 hover:bg-white/20 text-gray-300">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+
+            <!-- Total Amount Due Banner -->
+            <div class="p-4 bg-navy-950/90 border-b border-white/10 flex items-center justify-between">
+                <div>
+                    <span class="text-[11px] text-gray-400">Total Payable Amount:</span>
+                    <h4 class="text-2xl font-extrabold text-accent-emerald" id="gateway-total-amount">₹0</h4>
+                </div>
+                <div class="text-right">
+                    <span class="text-[10px] uppercase font-bold text-gray-400">Merchant UPI VPA</span>
+                    <p class="text-xs font-mono font-bold text-white">8219727646@upi</p>
+                    <span class="text-[9px] text-accent-emerald">Order confirmed on receipt</span>
+                </div>
+            </div>
+
+            <!-- Payment Methods Switcher Inside Gateway -->
+            <div class="grid grid-cols-3 bg-navy-900/90 p-2 gap-1.5 border-b border-white/10 text-xs font-semibold">
+                <button type="button" onclick="switchGatewayMethod('upi')" id="gw-tab-upi" class="py-2.5 rounded-xl bg-accent-emerald text-navy-900 font-extrabold shadow-glow-blue transition-all flex flex-col items-center gap-0.5">
+                    <span>⚡ Instant UPI</span>
+                    <span class="text-[9px] font-normal opacity-90">QR / Intent</span>
+                </button>
+                <button type="button" onclick="switchGatewayMethod('card')" id="gw-tab-card" class="py-2.5 rounded-xl bg-navy-800 text-gray-300 hover:text-white transition-all flex flex-col items-center gap-0.5">
+                    <span>💳 Debit / Card</span>
+                    <span class="text-[9px] font-normal opacity-80">3D-Secure</span>
+                </button>
+                <button type="button" onclick="switchGatewayMethod('netbanking')" id="gw-tab-netbanking" class="py-2.5 rounded-xl bg-navy-800 text-gray-300 hover:text-white transition-all flex flex-col items-center gap-0.5">
+                    <span>🏛️ NetBanking</span>
+                    <span class="text-[9px] font-normal opacity-80">All Banks</span>
+                </button>
+            </div>
+
+            <div class="p-5 space-y-4">
+                <!-- GATEWAY TAB 1: INSTANT UPI -->
+                <div id="gw-panel-upi" class="space-y-4">
+                    <div class="p-3.5 rounded-2xl bg-navy-900/90 border border-accent-emerald/40 space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold text-accent-emerald">Step 1: Scan QR or Open UPI App</span>
+                            <button onclick="copyUpiId('8219727646@upi')" class="px-2.5 py-1 rounded-lg bg-accent-emerald/20 text-accent-emerald text-[11px] font-bold hover:bg-accent-emerald/30 transition-colors">
+                                Copy 8219727646@upi
+                            </button>
+                        </div>
+
+                        <!-- QR Image & App Links -->
+                        <div class="flex flex-col sm:flex-row items-center gap-4 bg-navy-950/70 p-3 rounded-xl border border-white/5">
+                            <div class="w-32 h-32 bg-white p-1.5 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
+                                <img id="gw-upi-qr-img" src="" alt="UPI QR" class="w-full h-full object-contain">
+                            </div>
+                            <div class="space-y-2 text-xs text-gray-300">
+                                <p class="font-bold text-white">Scan with any UPI application:</p>
+                                <div class="flex flex-wrap gap-1.5">
+                                    <span class="px-2 py-0.5 rounded bg-white/10 text-gray-200 text-[10px]">Google Pay</span>
+                                    <span class="px-2 py-0.5 rounded bg-white/10 text-gray-200 text-[10px]">PhonePe</span>
+                                    <span class="px-2 py-0.5 rounded bg-white/10 text-gray-200 text-[10px]">Paytm</span>
+                                    <span class="px-2 py-0.5 rounded bg-white/10 text-gray-200 text-[10px]">BHIM UPI</span>
+                                </div>
+                                <a id="gw-upi-direct-btn" href="#" class="inline-flex items-center gap-1 text-[11px] font-bold text-accent-blue hover:underline pt-1">
+                                    <span>Open Installed UPI App Directly →</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="space-y-1.5 pt-1">
+                            <label class="block text-[11px] font-bold text-gray-200">Step 2: Enter 12-Digit UPI Transaction / UTR Ref Number *</label>
+                            <input id="gw-upi-utr-input" type="text" maxlength="16" placeholder="e.g. 482910482910 (found on payment success receipt)" class="w-full px-3.5 py-2.5 rounded-xl bg-navy-950 border border-white/15 text-xs text-white font-mono focus:outline-none focus:border-accent-emerald placeholder-gray-500">
+                            <p class="text-[10px] text-gray-400">Your order is officially confirmed immediately upon payment verification.</p>
+                        </div>
+                    </div>
+
+                    <button type="button" onclick="submitOnlinePaymentVerification('UPI')" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-accent-emerald to-accent-blue hover:from-emerald-500 hover:to-blue-500 text-white font-bold text-xs sm:text-sm shadow-glow-blue hover:scale-[1.01] transition-all flex items-center justify-center gap-2">
+                        <span>✓ Verify Payment & Confirm Order</span>
+                    </button>
+                </div>
+
+                <!-- GATEWAY TAB 2: CREDIT / DEBIT CARD -->
+                <div id="gw-panel-card" class="space-y-3.5 hidden">
+                    <div class="p-3.5 rounded-2xl bg-navy-900/90 border border-white/10 space-y-3 text-xs">
+                        <div>
+                            <label class="block text-[11px] text-gray-400 mb-1">Card Number *</label>
+                            <div class="relative">
+                                <input id="gw-card-number" type="text" maxlength="19" placeholder="4532 8912 0482 1928" oninput="formatCardNumberInput(this)" class="w-full pl-3 pr-10 py-2.5 rounded-xl bg-navy-950 border border-white/15 text-xs text-white font-mono focus:outline-none focus:border-accent-blue">
+                                <span class="absolute right-3 top-2.5 text-xs text-gray-400 font-bold">💳</span>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-[11px] text-gray-400 mb-1">Cardholder Full Name *</label>
+                            <input id="gw-card-name" type="text" placeholder="Name printed on card" class="w-full px-3 py-2.5 rounded-xl bg-navy-950 border border-white/15 text-xs text-white focus:outline-none focus:border-accent-blue">
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-[11px] text-gray-400 mb-1">Expiry Date *</label>
+                                <input id="gw-card-expiry" type="text" maxlength="5" placeholder="MM/YY" oninput="formatCardExpiryInput(this)" class="w-full px-3 py-2.5 rounded-xl bg-navy-950 border border-white/15 text-xs text-white font-mono focus:outline-none focus:border-accent-blue text-center">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] text-gray-400 mb-1">CVV / CVC (3-digits) *</label>
+                                <input id="gw-card-cvv" type="password" maxlength="4" placeholder="•••" class="w-full px-3 py-2.5 rounded-xl bg-navy-950 border border-white/15 text-xs text-white font-mono focus:outline-none focus:border-accent-blue text-center">
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="button" onclick="submitOnlinePaymentVerification('Card')" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-accent-blue via-accent-violet to-purple-600 text-white font-bold text-xs sm:text-sm shadow-glow-blue hover:scale-[1.01] transition-all">
+                        Pay Securely via 3D-Secure Bank OTP
+                    </button>
+                </div>
+
+                <!-- GATEWAY TAB 3: NETBANKING -->
+                <div id="gw-panel-netbanking" class="space-y-3.5 hidden">
+                    <div class="p-3.5 rounded-2xl bg-navy-900/90 border border-white/10 space-y-3 text-xs">
+                        <label class="block text-[11px] text-gray-300 font-semibold mb-1">Select Bank for Internet Banking *</label>
+                        <select id="gw-netbanking-select" class="w-full px-3.5 py-2.5 rounded-xl bg-navy-950 border border-white/15 text-xs text-white focus:outline-none focus:border-accent-blue">
+                            <option value="State Bank of India">State Bank of India (SBI)</option>
+                            <option value="HDFC Bank">HDFC Bank</option>
+                            <option value="ICICI Bank">ICICI Bank</option>
+                            <option value="Punjab National Bank">Punjab National Bank (PNB)</option>
+                            <option value="Axis Bank">Axis Bank</option>
+                            <option value="Kotak Mahindra Bank">Kotak Mahindra Bank</option>
+                        </select>
+                        <p class="text-[10px] text-gray-400">You will be securely authenticated with your selected bank.</p>
+                    </div>
+
+                    <button type="button" onclick="submitOnlinePaymentVerification('NetBanking')" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-accent-emerald to-accent-blue text-white font-bold text-xs sm:text-sm shadow-glow-blue hover:scale-[1.01] transition-all">
+                        Authorize NetBanking & Complete Order
+                    </button>
+                </div>
+
+                <!-- PROCESSING ANIMATION OVERLAY -->
+                <div id="gw-processing-overlay" class="hidden p-6 rounded-2xl bg-navy-950/95 border border-accent-emerald/40 text-center space-y-3">
+                    <div class="w-12 h-12 rounded-full border-4 border-accent-emerald border-t-transparent animate-spin mx-auto"></div>
+                    <h4 class="text-sm font-bold text-white" id="gw-processing-title">Contacting Banking Network...</h4>
+                    <p class="text-xs text-gray-400" id="gw-processing-desc">Merchant UPI VPA: 8219727646@upi • Please do not close this window</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ORDER CONFIRMATION & DIGITAL TAX RECEIPT MODAL -->
+    <div id="cod-order-modal" class="fixed inset-0 z-[97] hidden items-center justify-center p-4 bg-black/85 backdrop-blur-md overflow-y-auto">
+        <div class="glass-panel w-full max-w-lg rounded-3xl border border-accent-emerald/50 shadow-2xl overflow-hidden p-6 my-8">
             <div class="flex items-center justify-between border-b border-white/10 pb-4 mb-4">
                 <div class="flex items-center gap-3">
-                    <div class="w-11 h-11 rounded-2xl bg-accent-emerald/20 border border-accent-emerald/40 flex items-center justify-center text-accent-emerald font-extrabold text-lg">
+                    <div class="w-12 h-12 rounded-2xl bg-accent-emerald/20 border border-accent-emerald/40 flex items-center justify-center text-accent-emerald font-extrabold text-xl shadow-glow-blue">
                         ✓
                     </div>
                     <div>
-                        <span id="cod-modal-badge" class="px-2 py-0.5 rounded bg-accent-emerald/20 text-accent-emerald text-[10px] font-bold uppercase tracking-wider">ORDER CONFIRMED</span>
+                        <span id="cod-modal-badge" class="px-2.5 py-0.5 rounded-full bg-accent-emerald/20 text-accent-emerald text-[10px] font-bold uppercase tracking-wider border border-accent-emerald/40">PAYMENT & ORDER CONFIRMED</span>
                         <h3 class="text-xl font-extrabold text-white mt-0.5" id="cod-modal-order-id">Order #ORD-5501</h3>
                     </div>
                 </div>
@@ -483,60 +875,59 @@
             </div>
 
             <div class="space-y-3 text-xs text-gray-300 mb-5">
-                <div class="p-3.5 rounded-xl bg-navy-900/90 border border-white/10 space-y-2">
-                    <div class="flex justify-between">
-                        <span class="text-gray-400">Payment Gateway:</span>
-                        <span id="cod-modal-payment" class="font-bold text-accent-emerald">Instant UPI (8219727646@upi)</span>
+                <!-- Receipt Card -->
+                <div class="p-4 rounded-2xl bg-navy-900/95 border border-white/10 space-y-2">
+                    <div class="flex justify-between items-center pb-2 border-b border-white/5">
+                        <span class="text-gray-400">Payment Status:</span>
+                        <span id="cod-modal-payment-status" class="px-2 py-0.5 rounded bg-accent-emerald/20 text-accent-emerald font-bold text-[11px]">PAID & SETTLED</span>
                     </div>
-                    <div class="flex justify-between">
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-400">Payment Gateway / Method:</span>
+                        <span id="cod-modal-payment" class="font-bold text-white text-right">Instant UPI (8219727646@upi)</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-400">Transaction Ref / UTR:</span>
+                        <span id="cod-modal-txn-id" class="font-mono text-emerald-300 font-bold">UPI/8219727646/90284</span>
+                    </div>
+                    <div class="flex justify-between items-center">
                         <span class="text-gray-400">Fulfillment Mode:</span>
-                        <span id="cod-modal-fulfillment" class="font-semibold text-white">Home Delivery</span>
+                        <span id="cod-modal-fulfillment" class="font-semibold text-white">Home Delivery (30-45 Mins)</span>
                     </div>
-                    <div class="flex justify-between">
-                        <span class="text-gray-400">Customer & Phone:</span>
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-400">Customer & Mobile:</span>
                         <span id="cod-modal-customer" class="font-semibold text-white">Customer</span>
                     </div>
-                    <div class="flex justify-between">
-                        <span class="text-gray-400">Delivery Address:</span>
+                    <div class="flex justify-between items-start pt-1 border-t border-white/5">
+                        <span class="text-gray-400 flex-shrink-0 mr-2">Full Delivery Address:</span>
                         <span id="cod-modal-address" class="font-medium text-gray-200 text-right max-w-[240px]">Chandigarh</span>
                     </div>
-                    <div class="flex justify-between pt-2 border-t border-white/10 text-sm">
-                        <span class="font-bold text-white">Total Amount:</span>
-                        <span id="cod-modal-total" class="font-extrabold text-accent-emerald">₹0</span>
+                    <div class="flex justify-between items-center pt-2 border-t border-white/10 text-sm">
+                        <span class="font-bold text-white">Total Amount Paid:</span>
+                        <span id="cod-modal-total" class="font-extrabold text-accent-emerald text-base">₹0</span>
                     </div>
                 </div>
 
-                <!-- UPI Gateway Box in confirmation modal -->
-                <div id="cod-modal-upi-section" class="p-3.5 rounded-xl bg-accent-blue/10 border border-accent-blue/30 space-y-2">
+                <!-- Live Order Tracking -->
+                <div class="p-3.5 rounded-2xl bg-accent-emerald/10 border border-accent-emerald/30 space-y-1.5">
                     <div class="flex items-center justify-between">
-                        <span class="text-[11px] font-bold uppercase tracking-wider text-accent-blue">Pay via UPI Gateway</span>
-                        <button onclick="copyUpiId('8219727646@upi')" class="text-[10px] text-accent-emerald font-bold hover:underline">Copy 8219727646@upi</button>
+                        <p class="text-[11px] font-bold uppercase tracking-wider text-accent-emerald">Live Order Tracker</p>
+                        <span class="text-[10px] text-gray-400">Est. 30–45 Mins</span>
                     </div>
-                    <div class="flex items-center gap-3">
-                        <div class="w-16 h-16 bg-white p-1 rounded-lg flex-shrink-0">
-                            <img id="cod-modal-upi-qr" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi%3A%2F%2Fpay%3Fpa%3D8219727646%40upi%26pn%3DNearbyShopNet%26cu%3DINR" alt="UPI QR" class="w-full h-full object-contain">
-                        </div>
-                        <div class="text-[11px] text-gray-300">
-                            <p>Send payment to UPI ID: <strong class="text-white font-mono">8219727646@upi</strong></p>
-                            <p class="text-[10px] text-gray-400">Keep screenshot or UTR number ready for verification upon delivery.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Order Tracking Timeline -->
-                <div class="p-3.5 rounded-xl bg-accent-emerald/10 border border-accent-emerald/30">
-                    <p class="text-[11px] font-bold uppercase tracking-wider text-accent-emerald mb-2">Live Order Status Tracker</p>
-                    <div class="flex items-center justify-between text-[11px]">
-                        <span class="text-accent-emerald font-bold">1. Order Placed ✓</span>
+                    <div class="flex items-center justify-between text-[11px] pt-1">
+                        <span class="text-accent-emerald font-bold">1. Payment Verified ✓</span>
                         <span class="text-amber-300 font-semibold animate-pulse">2. Shop Packing...</span>
                         <span class="text-gray-500">3. Out for Delivery</span>
                     </div>
                 </div>
             </div>
 
-            <div class="flex justify-end gap-3">
+            <div class="flex flex-wrap items-center justify-end gap-2.5">
+                <button onclick="printOrderInvoice()" class="px-3.5 py-2.5 rounded-xl bg-white/10 hover:bg-white/15 text-xs font-semibold text-gray-200 flex items-center gap-1.5">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+                    Print Tax Invoice
+                </button>
                 <button onclick="closeCodOrderModal(); navigate('dashboard');" class="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/15 text-xs font-semibold text-white">
-                    View in Merchant Orders
+                    Merchant Orders
                 </button>
                 <button onclick="closeCodOrderModal()" class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-accent-emerald to-accent-blue text-white text-xs font-bold shadow-glow-blue">
                     Done
@@ -2042,10 +2433,71 @@ Give a helpful, concise response in 2-3 sentences. Recommend visiting the store 
             }
         }
 
+        // --- THREE-DOT MASTER NAVIGATION & ACTION MENU --- //
+        function toggleThreeDotMenu() {
+            const modal = document.getElementById('three-dot-menu-modal');
+            if (!modal) return;
+            if (modal.classList.contains('hidden')) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            } else {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        }
+
+        function selectThreeDotOption(key) {
+            toggleThreeDotMenu();
+            switch (key) {
+                case 'home':
+                    navigate('home');
+                    break;
+                case 'discover':
+                    navigate('discover');
+                    break;
+                case 'products':
+                    navigate('products');
+                    break;
+                case 'map-section':
+                    navigate('map-section');
+                    break;
+                case 'gemini':
+                    openGeminiModal();
+                    break;
+                case 'upi-pay':
+                    toggleCart();
+                    setOrderPaymentMethod('UPI');
+                    break;
+                case 'cart':
+                    toggleCart();
+                    break;
+                case 'locate':
+                    navigate('map-section');
+                    setTimeout(() => locateUserLiveGPS(false), 250);
+                    break;
+                case 'list-shop':
+                    navigate('dashboard');
+                    setTimeout(() => switchDashboardTab('list-shop'), 150);
+                    break;
+                case 'dashboard':
+                    navigate('dashboard');
+                    break;
+                case 'auth':
+                    openAuthModal('Customer');
+                    break;
+                case 'presentation':
+                    navigate('presentation');
+                    break;
+                default:
+                    navigate('home');
+            }
+        }
+
         // --- CART & CHECKOUT WITH UPI (8219727646@upi) & COD --- //
         let cart = [];
         let selectedOrderFulfillment = 'Delivery';
         let selectedOrderPayment = 'UPI';
+        let pendingOnlineCheckoutDetails = null;
 
         function setOrderFulfillmentMode(mode) {
             selectedOrderFulfillment = mode;
@@ -2064,26 +2516,32 @@ Give a helpful, concise response in 2-3 sentences. Recommend visiting the store 
             selectedOrderPayment = method;
             const codBtn = document.getElementById('pay-method-cod');
             const upiBtn = document.getElementById('pay-method-upi');
-            const cardBtn = document.getElementById('pay-method-card');
-            const upiBox = document.getElementById('upi-payment-details-box');
-            const labelEl = document.getElementById('checkout-btn-pay-label');
+            const codForm = document.getElementById('checkout-cod-form');
+            const onlineForm = document.getElementById('checkout-online-form');
+            const btnIcon = document.getElementById('checkout-btn-icon');
+            const btnLabel = document.getElementById('checkout-btn-label');
 
-            const inactive = 'p-2 rounded-xl border border-white/10 bg-navy-800 text-gray-300 hover:text-white text-center transition-all';
-            const active = 'p-2 rounded-xl border border-accent-emerald bg-accent-emerald/20 text-white text-center transition-all shadow-glow-blue';
+            const inactiveCod = 'p-2.5 rounded-xl border border-white/10 bg-navy-800 text-gray-400 hover:text-white text-center transition-all';
+            const activeCod = 'p-2.5 rounded-xl border border-amber-400 bg-amber-500/20 text-white text-center transition-all shadow-glow-amber';
 
-            if (codBtn) codBtn.className = method === 'COD' ? active : inactive;
-            if (upiBtn) upiBtn.className = method === 'UPI' ? active : inactive;
-            if (cardBtn) cardBtn.className = method === 'Card' ? active : inactive;
+            const inactiveUpi = 'p-2.5 rounded-xl border border-white/10 bg-navy-800 text-gray-400 hover:text-white text-center transition-all';
+            const activeUpi = 'p-2.5 rounded-xl border border-accent-emerald bg-accent-emerald/20 text-white text-center transition-all shadow-glow-blue';
 
-            if (method === 'UPI') {
-                upiBox?.classList.remove('hidden');
-                if (labelEl) labelEl.innerText = 'Pay with UPI (8219727646@upi)';
-            } else if (method === 'COD') {
-                upiBox?.classList.add('hidden');
-                if (labelEl) labelEl.innerText = 'Cash on Delivery';
+            if (method === 'COD') {
+                if (codBtn) codBtn.className = activeCod;
+                if (upiBtn) upiBtn.className = inactiveUpi;
+                if (codForm) codForm.classList.remove('hidden');
+                if (onlineForm) onlineForm.classList.add('hidden');
+                if (btnIcon) btnIcon.innerText = '🏠';
+                if (btnLabel) btnLabel.innerText = 'Place Cash on Delivery Order (Pay at Doorstep)';
             } else {
-                upiBox?.classList.add('hidden');
-                if (labelEl) labelEl.innerText = 'Card on Delivery';
+                selectedOrderPayment = 'UPI';
+                if (codBtn) codBtn.className = inactiveCod;
+                if (upiBtn) upiBtn.className = activeUpi;
+                if (codForm) codForm.classList.add('hidden');
+                if (onlineForm) onlineForm.classList.remove('hidden');
+                if (btnIcon) btnIcon.innerText = '⚡';
+                if (btnLabel) btnLabel.innerText = 'Proceed to Online Payment (8219727646@upi)';
             }
         }
 
@@ -2162,56 +2620,334 @@ Give a helpful, concise response in 2-3 sentences. Recommend visiting the store 
             if (grandTotalEl) grandTotalEl.innerText = `₹${total}`;
         }
 
-        function placeCustomerOrder() {
+        // --- PAYMENT GATEWAY & ADDRESS WORKFLOW LOGIC --- //
+        function handleCheckoutSubmission() {
             if (cart.length === 0) {
-                showToast("Your basket is empty!");
+                showToast("Your basket is empty! Add products first.");
                 return;
             }
 
             const totalAmount = cart.reduce((s, i) => s + i.price * i.quantity, 0);
             const totalItems = cart.reduce((s, i) => s + i.quantity, 0);
-            const orderId = `#ORD-${Math.floor(1000 + Math.random() * 9000)}`;
 
-            const name = document.getElementById('checkout-customer-name')?.value.trim() || 'Chandigarh Customer';
-            const phone = document.getElementById('checkout-customer-phone')?.value.trim() || '+91 90000-12345';
-            const address = document.getElementById('checkout-customer-address')?.value.trim() || 'Sector 17, Chandigarh';
+            if (selectedOrderPayment === 'COD') {
+                // CASH ON DELIVERY: FULL ADDRESS MUST BE COMPLETED
+                const name = document.getElementById('checkout-cod-name')?.value.trim();
+                const phone = document.getElementById('checkout-cod-phone')?.value.trim();
+                const altPhone = document.getElementById('checkout-cod-altphone')?.value.trim();
+                const house = document.getElementById('checkout-cod-house')?.value.trim();
+                const street = document.getElementById('checkout-cod-street')?.value.trim();
+                const landmark = document.getElementById('checkout-cod-landmark')?.value.trim();
+                const pincode = document.getElementById('checkout-cod-pincode')?.value.trim();
+                const city = document.getElementById('checkout-cod-city')?.value || 'Chandigarh';
+                const notes = document.getElementById('checkout-cod-notes')?.value.trim();
 
-            document.getElementById('cod-modal-order-id').innerText = `Order ${orderId}`;
-            document.getElementById('cod-modal-total').innerText = `₹${totalAmount}`;
-            document.getElementById('cod-modal-customer').innerText = `${name} (${phone})`;
-            document.getElementById('cod-modal-address').innerText = address;
-            document.getElementById('cod-modal-payment').innerText = selectedOrderPayment === 'UPI' ? 'Instant UPI (8219727646@upi)' : 'Cash on Delivery';
+                if (!name) {
+                    showToast("Please enter your Full Legal Name for Cash on Delivery!");
+                    document.getElementById('checkout-cod-name')?.focus();
+                    return;
+                }
+                if (!phone || phone.length < 8) {
+                    showToast("Please enter a valid Primary Mobile Number for delivery verification!");
+                    document.getElementById('checkout-cod-phone')?.focus();
+                    return;
+                }
+                if (!house) {
+                    showToast("Please specify House / Flat / SCO / Booth Number for Cash on Delivery!");
+                    document.getElementById('checkout-cod-house')?.focus();
+                    return;
+                }
+                if (!street) {
+                    showToast("Please enter Street, Road, or Sector!");
+                    document.getElementById('checkout-cod-street')?.focus();
+                    return;
+                }
+                if (!landmark) {
+                    showToast("Please provide a Nearest Landmark so the delivery executive can reach you!");
+                    document.getElementById('checkout-cod-landmark')?.focus();
+                    return;
+                }
+                if (!pincode || pincode.length !== 6 || isNaN(pincode)) {
+                    showToast("Please enter a valid 6-digit Pincode (e.g. 160017)!");
+                    document.getElementById('checkout-cod-pincode')?.focus();
+                    return;
+                }
 
-            const modalQr = document.getElementById('cod-modal-upi-qr');
-            if (modalQr) {
-                modalQr.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(`upi://pay?pa=8219727646@upi&pn=NearbyShopNet&am=${totalAmount}&cu=INR`)}`;
+                const fullDeliveryAddress = `${house}, ${street}, Near ${landmark}, ${city} - ${pincode}${altPhone ? ` (Alt: ${altPhone})` : ''}${notes ? ` [Notes: ${notes}]` : ''}`;
+                const orderId = `#ORD-${Math.floor(1000 + Math.random() * 9000)}`;
+
+                // Confirm COD Order Immediately (Cash collected at doorstep)
+                document.getElementById('cod-modal-badge').innerText = 'CASH ON DELIVERY ORDER PLACED';
+                document.getElementById('cod-modal-badge').className = 'px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 text-[10px] font-bold uppercase tracking-wider border border-amber-500/40';
+                document.getElementById('cod-modal-order-id').innerText = `Order ${orderId}`;
+                document.getElementById('cod-modal-payment-status').innerText = 'PENDING PAYMENT (CASH AT DOORSTEP)';
+                document.getElementById('cod-modal-payment-status').className = 'px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-bold text-[11px]';
+                document.getElementById('cod-modal-payment').innerText = 'Cash on Delivery (Pay at Doorstep)';
+                document.getElementById('cod-modal-txn-id').innerText = 'COD-UNPAID-DOORSTEP';
+                document.getElementById('cod-modal-customer').innerText = `${name} (${phone})`;
+                document.getElementById('cod-modal-address').innerText = fullDeliveryAddress;
+                document.getElementById('cod-modal-total').innerText = `₹${totalAmount}`;
+
+                // Add to Merchant Dashboard Orders Table
+                const tbody = document.getElementById('merchant-orders-tbody');
+                if (tbody) {
+                    tbody.insertAdjacentHTML('afterbegin', `
+                        <tr class="border-b border-white/5 bg-amber-500/5 hover:bg-white/5 transition-colors">
+                            <td class="px-6 py-4 font-bold text-amber-400">${orderId}</td>
+                            <td class="px-6 py-4">${name}<br><span class="text-xs text-gray-400">${fullDeliveryAddress}</span></td>
+                            <td class="px-6 py-4">${totalItems} Items</td>
+                            <td class="px-6 py-4 font-semibold">₹${totalAmount} <span class="ml-1 px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 text-[10px] font-bold">COD</span></td>
+                            <td class="px-6 py-4"><span class="px-2 py-1 rounded-full text-xs font-medium bg-amber-500/20 text-amber-300 border border-amber-500/30">Cash Due</span></td>
+                            <td class="px-6 py-4 text-right">
+                                <button onclick="showToast('Order Accepted for Delivery!')" class="text-accent-emerald hover:text-emerald-400 mr-2 font-medium">Accept</button>
+                            </td>
+                        </tr>
+                    `);
+                }
+
+                cart = [];
+                updateCartUI();
+                toggleCart();
+
+                const modal = document.getElementById('cod-order-modal');
+                if (modal) {
+                    modal.classList.remove('hidden');
+                    modal.classList.add('flex');
+                }
+                showToast(`COD Order ${orderId} placed! Please keep ₹${totalAmount} cash ready at doorstep.`);
+            } else {
+                // ONLINE PAYMENT: Take details, DO NOT confirm order yet, OPEN PAYMENT GATEWAY!
+                const name = document.getElementById('checkout-online-name')?.value.trim();
+                const phone = document.getElementById('checkout-online-phone')?.value.trim();
+                const email = document.getElementById('checkout-online-email')?.value.trim();
+                const address = document.getElementById('checkout-online-address')?.value.trim();
+
+                if (!name) {
+                    showToast("Please enter your Full Name for online payment!");
+                    document.getElementById('checkout-online-name')?.focus();
+                    return;
+                }
+                if (!phone || phone.length < 8) {
+                    showToast("Please enter your Mobile Number for payment confirmation SMS!");
+                    document.getElementById('checkout-online-phone')?.focus();
+                    return;
+                }
+                if (!email || !email.includes('@')) {
+                    showToast("Please enter a valid Email ID to receive GST tax invoice & payment receipt!");
+                    document.getElementById('checkout-online-email')?.focus();
+                    return;
+                }
+                if (!address || address.length < 5) {
+                    showToast("Please provide your Complete Delivery Address!");
+                    document.getElementById('checkout-online-address')?.focus();
+                    return;
+                }
+
+                // Stash pending order details
+                pendingOnlineCheckoutDetails = {
+                    name,
+                    phone,
+                    email,
+                    address,
+                    totalAmount,
+                    totalItems,
+                    items: [...cart]
+                };
+
+                // Prepare and Launch Online Payment Gateway Modal
+                document.getElementById('gateway-total-amount').innerText = `₹${totalAmount}`;
+                const upiUri = `upi://pay?pa=8219727646@upi&pn=NearbyShopNet&am=${totalAmount}&cu=INR`;
+                const gwQrImg = document.getElementById('gw-upi-qr-img');
+                const gwDirectBtn = document.getElementById('gw-upi-direct-btn');
+                if (gwQrImg) gwQrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(upiUri)}`;
+                if (gwDirectBtn) gwDirectBtn.href = upiUri;
+
+                // Reset processing overlay
+                document.getElementById('gw-processing-overlay')?.classList.add('hidden');
+                switchGatewayMethod('upi');
+
+                const gwModal = document.getElementById('online-payment-gateway-modal');
+                if (gwModal) {
+                    gwModal.classList.remove('hidden');
+                    gwModal.classList.add('flex');
+                }
+                showToast("Opening Secure Payment Gateway for 8219727646@upi...");
+            }
+        }
+
+        function closeOnlinePaymentModal() {
+            const modal = document.getElementById('online-payment-gateway-modal');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        }
+
+        function switchGatewayMethod(method) {
+            const tabUpi = document.getElementById('gw-tab-upi');
+            const tabCard = document.getElementById('gw-tab-card');
+            const tabNetbanking = document.getElementById('gw-tab-netbanking');
+            const panelUpi = document.getElementById('gw-panel-upi');
+            const panelCard = document.getElementById('gw-panel-card');
+            const panelNetbanking = document.getElementById('gw-panel-netbanking');
+
+            const activeTabClass = 'py-2.5 rounded-xl bg-accent-emerald text-navy-900 font-extrabold shadow-glow-blue transition-all flex flex-col items-center gap-0.5';
+            const inactiveTabClass = 'py-2.5 rounded-xl bg-navy-800 text-gray-300 hover:text-white transition-all flex flex-col items-center gap-0.5';
+
+            if (tabUpi) tabUpi.className = method === 'upi' ? activeTabClass : inactiveTabClass;
+            if (tabCard) tabCard.className = method === 'card' ? activeTabClass : inactiveTabClass;
+            if (tabNetbanking) tabNetbanking.className = method === 'netbanking' ? activeTabClass : inactiveTabClass;
+
+            if (panelUpi) panelUpi.classList.toggle('hidden', method !== 'upi');
+            if (panelCard) panelCard.classList.toggle('hidden', method !== 'card');
+            if (panelNetbanking) panelNetbanking.classList.toggle('hidden', method !== 'netbanking');
+        }
+
+        function submitOnlinePaymentVerification(gatewayMethod) {
+            if (!pendingOnlineCheckoutDetails || (cart.length === 0 && !pendingOnlineCheckoutDetails.totalAmount)) {
+                showToast("No active checkout session found.");
+                return;
             }
 
-            // Inject into Merchant Dashboard Orders table
+            let txnId = '';
+            let paymentDesc = '';
+
+            if (gatewayMethod === 'UPI') {
+                const utr = document.getElementById('gw-upi-utr-input')?.value.trim();
+                if (!utr || utr.length < 6) {
+                    showToast("Please enter the 12-digit UPI Transaction / UTR Ref number from your UPI payment receipt!");
+                    document.getElementById('gw-upi-utr-input')?.focus();
+                    return;
+                }
+                txnId = `UPI/8219727646/${utr}`;
+                paymentDesc = `Instant UPI (VPA: 8219727646@upi) • Ref: ${utr}`;
+            } else if (gatewayMethod === 'Card') {
+                const cardNum = document.getElementById('gw-card-number')?.value.trim();
+                const cardName = document.getElementById('gw-card-name')?.value.trim();
+                const cardExp = document.getElementById('gw-card-expiry')?.value.trim();
+                const cardCvv = document.getElementById('gw-card-cvv')?.value.trim();
+
+                if (!cardNum || cardNum.replace(/\s+/g, '').length < 15) {
+                    showToast("Please enter a valid 16-digit Card Number!");
+                    document.getElementById('gw-card-number')?.focus();
+                    return;
+                }
+                if (!cardName) {
+                    showToast("Please enter the Cardholder Name!");
+                    document.getElementById('gw-card-name')?.focus();
+                    return;
+                }
+                if (!cardExp || !cardExp.includes('/') || cardExp.length !== 5) {
+                    showToast("Please enter card expiry in MM/YY format!");
+                    document.getElementById('gw-card-expiry')?.focus();
+                    return;
+                }
+                if (!cardCvv || cardCvv.length < 3) {
+                    showToast("Please enter 3-digit CVV / CVC!");
+                    document.getElementById('gw-card-cvv')?.focus();
+                    return;
+                }
+                const last4 = cardNum.replace(/\s+/g, '').slice(-4);
+                txnId = `CARD-AUTH-${Math.floor(100000 + Math.random() * 900000)}`;
+                paymentDesc = `Debit/Credit Card ending in *${last4} (3D-Secure Authenticated)`;
+            } else if (gatewayMethod === 'NetBanking') {
+                const bank = document.getElementById('gw-netbanking-select')?.value || 'Internet Banking';
+                const bankCode = bank.replace(/[^A-Za-z]/g, '').slice(0, 4).toUpperCase();
+                txnId = `NB-${bankCode}-${Math.floor(100000 + Math.random() * 900000)}`;
+                paymentDesc = `NetBanking (${bank}) - Direct Bank Settlement`;
+            }
+
+            // Show simulated bank verification overlay
+            const overlay = document.getElementById('gw-processing-overlay');
+            const procTitle = document.getElementById('gw-processing-title');
+            const procDesc = document.getElementById('gw-processing-desc');
+
+            if (procTitle) procTitle.innerText = `Verifying ${gatewayMethod} Payment with Banking Server...`;
+            if (procDesc) procDesc.innerText = `Merchant UPI: 8219727646@upi • Authenticating transaction ${txnId}...`;
+            if (overlay) overlay.classList.remove('hidden');
+
+            setTimeout(() => {
+                if (overlay) overlay.classList.add('hidden');
+                closeOnlinePaymentModal();
+
+                // NOW ORDER IS OFFICIALLY CONFIRMED ONLY AFTER PAYMENT IS DONE & VERIFIED!
+                finalizeOnlineOrderPayment(txnId, paymentDesc);
+            }, 1400);
+        }
+
+        function finalizeOnlineOrderPayment(txnId, paymentDesc) {
+            const details = pendingOnlineCheckoutDetails;
+            if (!details) return;
+
+            const orderId = `#ORD-${Math.floor(1000 + Math.random() * 9000)}`;
+            const totalAmount = details.totalAmount;
+            const totalItems = details.totalItems;
+
+            // Configure receipt modal
+            document.getElementById('cod-modal-badge').innerText = 'ONLINE PAYMENT SUCCESSFUL & VERIFIED ✓';
+            document.getElementById('cod-modal-badge').className = 'px-2.5 py-0.5 rounded-full bg-accent-emerald/20 text-accent-emerald text-[10px] font-bold uppercase tracking-wider border border-accent-emerald/40';
+            document.getElementById('cod-modal-order-id').innerText = `Order ${orderId}`;
+            document.getElementById('cod-modal-payment-status').innerText = 'PAID & SETTLED (8219727646@upi)';
+            document.getElementById('cod-modal-payment-status').className = 'px-2 py-0.5 rounded bg-accent-emerald/20 text-accent-emerald font-bold text-[11px]';
+            document.getElementById('cod-modal-payment').innerText = paymentDesc;
+            document.getElementById('cod-modal-txn-id').innerText = txnId;
+            document.getElementById('cod-modal-customer').innerText = `${details.name} (${details.phone}) • ${details.email}`;
+            document.getElementById('cod-modal-address').innerText = details.address;
+            document.getElementById('cod-modal-total').innerText = `₹${totalAmount}`;
+
+            // Register in Merchant Dashboard Orders Table
             const tbody = document.getElementById('merchant-orders-tbody');
             if (tbody) {
                 tbody.insertAdjacentHTML('afterbegin', `
                     <tr class="border-b border-white/5 bg-accent-emerald/5 hover:bg-white/5 transition-colors">
                         <td class="px-6 py-4 font-bold text-accent-emerald">${orderId}</td>
-                        <td class="px-6 py-4">${name}<br><span class="text-xs text-gray-400">${address}</span></td>
+                        <td class="px-6 py-4">${details.name}<br><span class="text-xs text-gray-400">${details.address}</span></td>
                         <td class="px-6 py-4">${totalItems} Items</td>
-                        <td class="px-6 py-4 font-semibold">₹${totalAmount} <span class="ml-1 px-2 py-0.5 rounded bg-accent-emerald/20 text-accent-emerald text-[10px] font-bold">${selectedOrderPayment === 'UPI' ? '8219727646@upi' : 'COD'}</span></td>
-                        <td class="px-6 py-4"><span class="px-2 py-1 rounded-full text-xs font-medium bg-yellow-500/20 text-yellow-400 border border-yellow-500/30">Confirmed</span></td>
+                        <td class="px-6 py-4 font-semibold">₹${totalAmount} <span class="ml-1 px-2 py-0.5 rounded bg-accent-emerald/20 text-accent-emerald text-[10px] font-bold">PAID (8219727646@upi)</span></td>
+                        <td class="px-6 py-4"><span class="px-2 py-1 rounded-full text-xs font-medium bg-accent-emerald/20 text-accent-emerald border border-accent-emerald/40">Paid & Confirmed</span></td>
                         <td class="px-6 py-4 text-right">
-                            <button onclick="showToast('Order Accepted!')" class="text-accent-emerald hover:text-emerald-400 mr-2 font-medium">Accept</button>
+                            <button onclick="showToast('Dispatching Online Paid Order!')" class="text-accent-emerald hover:text-emerald-400 mr-2 font-medium">Dispatch</button>
                         </td>
                     </tr>
                 `);
             }
 
+            // Clear cart & close cart drawer
             cart = [];
             updateCartUI();
             toggleCart();
+            pendingOnlineCheckoutDetails = null;
 
-            const modal = document.getElementById('cod-order-modal');
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-            showToast(`Order confirmed! Pay to 8219727646@upi`);
+            // Show Order Confirmed Modal
+            const orderModal = document.getElementById('cod-order-modal');
+            if (orderModal) {
+                orderModal.classList.remove('hidden');
+                orderModal.classList.add('flex');
+            }
+            showToast(`Payment Verified! Order ${orderId} confirmed successfully with UPI 8219727646@upi.`);
+        }
+
+        function formatCardNumberInput(input) {
+            let val = input.value.replace(/\D/g, '').slice(0, 16);
+            let formatted = val.match(/.{1,4}/g)?.join(' ') || val;
+            input.value = formatted;
+        }
+
+        function formatCardExpiryInput(input) {
+            let val = input.value.replace(/\D/g, '').slice(0, 4);
+            if (val.length >= 2) {
+                input.value = val.slice(0, 2) + '/' + val.slice(2);
+            } else {
+                input.value = val;
+            }
+        }
+
+        function printOrderInvoice() {
+            window.print();
+        }
+
+        function placeCustomerOrder() {
+            handleCheckoutSubmission();
         }
 
         function closeCodOrderModal() {
@@ -2820,6 +3556,7 @@ Give a helpful, concise response in 2-3 sentences. Recommend visiting the store 
             updateAuthUI();
             filterAndRenderShops(true);
             renderProducts();
+            setOrderPaymentMethod('UPI');
             navigate('home');
         });
     </script>
